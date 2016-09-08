@@ -1,23 +1,22 @@
 === Advanced Custom Fields: GeoMeta Field ===
-Contributors: AUTHOR_NAME
-Tags: PLUGIN_TAGS
-Requires at least: 3.5
-Tested up to: 3.8.1
+Contributors: stuporglue, cimburadotcom
+Tags: GIS, Spatial, ACF, WP-GeoMeta
+Requires at least: 4.4.0
+Tested up to: 4.6.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-SHORT_DESCRIPTION
+Store real spatial data with ACF, using the WP-GeoMeta library.
 
 == Description ==
 
-EXTENDED_DESCRIPTION
+Store real spatial data with ACF, using the WP-GeoMeta library.
 
 = Compatibility =
 
 This ACF field type is compatible with:
 * ACF 5
-* ACF 4
 
 == Installation ==
 
@@ -28,5 +27,5 @@ This ACF field type is compatible with:
 
 == Changelog ==
 
-= 1.0.0 =
+= 0.0.1 =
 * Initial Release.

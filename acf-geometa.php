@@ -1,11 +1,10 @@
 <?php
-
 /*
 Plugin Name: Advanced Custom Fields: GeoMeta
-Plugin URI: PLUGIN_URL
-Description: SHORT_DESCRIPTION
-Version: 1.0.0
-Author: AUTHOR_NAME
+Plugin URI: https://bitbucket.org/cimburacom/acf-geometa
+Description: Store real spatial data with ACF, using the WP-GeoMeta library.
+Version: 0.0.1
+Author: stuporglue, cimburadotcom
 Author URI: AUTHOR_URL
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -37,7 +36,7 @@ class acf_plugin_geometa {
 		
 		// vars
 		$this->settings = array(
-			'version'	=> '1.0.0',
+			'version'	=> '0.0.1',
 			'url'		=> plugin_dir_url( __FILE__ ),
 			'path'		=> plugin_dir_path( __FILE__ )
 		);
