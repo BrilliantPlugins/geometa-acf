@@ -8,11 +8,10 @@
 		jQuery('.acfgeometa_ll_wrap').on( 'keyup change', make_ll_to_geojson );
 	}
 
-	function make_maps(i,div) {
+	function make_maps(i,wrapperdiv) {
+		var div = jQuery(wrapperdiv).find('.acfgeometa_map')[0];
 		div.innerHTML = '';
 		var map = L.map(div).setView([0,0],1);
-		var mapoptions = JSON.parse(div.dataset.map);
-		var meta_key = mapoptions.meta_key;
 
 		// Basemap
 		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -27,7 +26,7 @@
 		var curgeojson = '';
 		var drawnItems = new L.GeoJSON();
 		try {
-			curgeojson = JSON.parse(jQuery('input[name="' + meta_key + '"]').val());
+			curgeojson = JSON.parse(jQuery(this).find('input[data-name="geojson"]').val());
 			drawnItems.addData(curgeojson);
 		} catch(e) {}
 		map.addLayer( drawnItems );
@@ -45,11 +44,11 @@
 		map.addControl( drawControl );
 
 		// Make a function that will have access to drawnItems.
-		var savevalfunc = (function(){
+		var savevalfunc = (function(thegeojson){
 			return function(){
-				jQuery( 'input[name="' + meta_key + '"]' ).val( JSON.stringify( drawnItems.toGeoJSON() ) );
+				thegeojson.val( JSON.stringify( drawnItems.toGeoJSON() ) );
 			};
-		})();
+		})(jQuery(this).find('input[data-name="geojson"]'));
 
 		map.on('draw:created', function (e) {
 			drawnItems.addLayer(e.layer);
@@ -83,7 +82,7 @@
 			"type" : "Feature",
 			"geometry" : { 
 				"type" : "Point",
-				"coordinates" : [ parseFloat(lat), parseFloat(lng) ]
+				"coordinates" : [ parseFloat(lng), parseFloat(lat) ]
 			},
 			"properties" : {}
 		};

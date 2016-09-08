@@ -179,7 +179,7 @@ if( !class_exists('acf_field_geometa') ) :
 			} else if ( $field[ 'user_input_type' ] == 'map' ){
 				echo '<div class="acfgeometa_map_wrap">';
 				echo '<div class="acfgeometa_map" data-map="' . htmlentities( json_encode( $map_options ) ) . '">The map is loading...</div>';
-				echo '<input type="hidden" name="' . esc_attr( $metabox['meta_key'] ) . '" value="' . esc_attr( $the_geom ) . '">';
+				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
 			} else {
 				echo "Sorry, {$field[ 'user_input_type' ]} input type isn't supported yet!\n";
@@ -210,33 +210,23 @@ if( !class_exists('acf_field_geometa') ) :
 
 
 		// register & include JS
-		wp_register_script( 'acf-input-geometa', "{$url}assets/js/input.js", array('acf-input'), $version );
+		wp_register_script( 'acf-input-geometa-leaflet1-js', "{$url}assets/js/leaflet.js", array(), $version );
+		wp_register_script( 'acf-input-geometa-leaflet-draw-js', "{$url}assets/Leaflet.draw/leaflet.draw.js", array('acf-input-geometa-leaflet1-js'), $version );
+		wp_register_script( 'acf-input-geometa-leaflet-locate-control-js', "{$url}assets/js/L.Control.Locate.min.js", array('acf-input-geometa-leaflet1-js'), $version );
+		wp_register_script( 'acf-input-geometa', "{$url}assets/js/input.js", array('acf-input','acf-input-geometa-leaflet1-js', 'acf-input-geometa-leaflet-locate-control-js','acf-input-geometa-leaflet-draw-js'), $version );
+
 		wp_enqueue_script('acf-input-geometa');
-
-		wp_register_script( 'acf-input-geometa-leaflet1-js', "{$url}assets/js/leaflet.js", array('acf-input'), $version );
-		wp_enqueue_script('acf-input-geometa-leaflet1-js');
-
-		wp_register_script( 'acf-input-geometa-leaflet-draw-js', "{$url}assets/Leaflet.draw/leaflet.draw.js", array('acf-input-geometa-leaflet1-js', 'acf-input'), $version );
-		wp_enqueue_script('acf-input-geometa-leaflet-draw-js');
 
 
 
 		// register & include CSS
-		wp_register_style( 'acf-input-geometa', "{$url}assets/css/input.css", array('acf-input'), $version );
+		wp_register_style( 'acf-input-geometa-leaflet1-css', "{$url}assets/css/leaflet.css", array(), $version );
+		wp_register_style( 'acf-input-geometa-leaflet-locate-control-css', "{$url}assets/css/L.Control.Locate.min.css", array('acf-input-geometa-leaflet1-css'), $version );
+		wp_register_style( 'acf-input-geometa-fontawesome', "{$url}assets/css/font-awesome.min.css", array('acf-input-geometa-leaflet1-css'), $version );
+		wp_register_style( 'acf-input-geometa-leaflet-draw-css', "{$url}assets/Leaflet.draw/leaflet.draw.css", array('acf-input-geometa-leaflet1-css'), $version );
+		wp_register_style( 'acf-input-geometa', "{$url}assets/css/input.css", array('acf-input','acf-input-geometa-leaflet-draw-css'), $version );
+
 		wp_enqueue_style('acf-input-geometa');
-
-		wp_register_style( 'acf-input-geometa-leaflet1-css', "{$url}assets/css/leaflet.css", array('acf-input'), $version );
-		wp_enqueue_style( 'acf-input-geometa-leaflet1-css');
-
-		wp_register_style( 'acf-input-geometa-leaflet-locate-control', "{$url}assets/css/L.Control.Locate.min.css", array('acf-input','acf-input-geometa-leaflet1-css'), $version );
-		wp_enqueue_style('acf-input-geometa-leaflet-locate-control');
-
-		wp_register_style( 'acf-input-geometa-fontawesome', "{$url}assets/css/font-awesome.min.css", array('acf-input'), $version );
-		wp_enqueue_style('acf-input-geometa-fontawesome');
-
-		wp_register_script( 'acf-input-geometa-leaflet-draw-css', "{$url}assets/Leaflet.draw/leaflet.draw.css", array('acf-input','acf-input-geometa-leaflet1-css'), $version );
-		wp_enqueue_script('acf-input-geometa-leaflet-draw-css');
-
 	}
 
 
