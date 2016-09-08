@@ -4,8 +4,8 @@ Plugin Name: Advanced Custom Fields: GeoMeta
 Plugin URI: https://bitbucket.org/cimburacom/acf-geometa
 Description: Store real spatial data with ACF, using the WP-GeoMeta library.
 Version: 0.0.1
-Author: stuporglue, cimburadotcom
-Author URI: AUTHOR_URL
+Author: Cimbura.com
+Author URI: http://cimbura.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -87,5 +87,11 @@ new acf_plugin_geometa();
 
 // class_exists check
 endif;
-	
-?>
+
+require_once( dirname( __FILE__ ) . '/wp-geometa/wp-geometa.php' );
+
+function acf_geometa_activation_hook() {
+	$wpgeo = WP_GeoMeta::get_instance();
+	$wpgeo->create_geo_tables();
+}
+register_activation_hook( __FILE__ , 'acf_geometa_activation_hook' );

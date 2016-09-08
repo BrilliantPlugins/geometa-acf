@@ -1,15 +1,99 @@
 (function($){
-	
-	
+
+
 	function initialize_field( $el ) {
-		
-		//$el.doStuff();
-		
+
+		jQuery('.acfgeometa_map_wrap').each( make_maps );
+
+		jQuery('.acfgeometa_ll_wrap').on( 'keyup change', make_ll_to_geojson );
 	}
-	
-	
+
+	function make_maps(i,div) {
+		div.innerHTML = '';
+		var map = L.map(div).setView([0,0],1);
+		var mapoptions = JSON.parse(div.dataset.map);
+		var meta_key = mapoptions.meta_key;
+
+		// Basemap
+		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			maxZoom: 19,
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+		}).addTo(map);
+
+		// Location control
+		L.control.locate({ icon: 'fa fa-location-arrow' }).addTo(map);
+
+		// Draw control layer
+		var curgeojson = '';
+		var drawnItems = new L.GeoJSON();
+		try {
+			curgeojson = JSON.parse(jQuery('input[name="' + meta_key + '"]').val());
+			drawnItems.addData(curgeojson);
+		} catch(e) {}
+		map.addLayer( drawnItems );
+
+		// Draw control
+		var drawControl = new L.Control.Draw({
+			draw: {
+				circle: false
+			},
+			edit: {
+				featureGroup: drawnItems
+			}
+		});
+
+		map.addControl( drawControl );
+
+		// Make a function that will have access to drawnItems.
+		var savevalfunc = (function(){
+			return function(){
+				jQuery( 'input[name="' + meta_key + '"]' ).val( JSON.stringify( drawnItems.toGeoJSON() ) );
+			};
+		})();
+
+		map.on('draw:created', function (e) {
+			drawnItems.addLayer(e.layer);
+			savevalfunc(e);
+		});
+
+		map.on( 'draw:edited', savevalfunc );
+		map.on( 'draw:deleted', savevalfunc );
+
+		// If we have existing geojson, fit bounds
+		if ( drawnItems.getLayers().length > 0 ) {
+			map.fitBounds(drawnItems.getBounds());
+		}
+	}
+
+	function make_ll_to_geojson(e){
+		var lat = jQuery(this).find('input[data-name="lat"]').val();
+		var lng = jQuery(this).find('input[data-name="lng"]').val();
+
+		if ( (parseFloat( lat ) + "") !== lat || (parseFloat( lng ) + "") !== lng ) {
+			// Something's not numeric!
+			return;
+		}
+
+		if ( lng < -180 || lng > 180 || lat > 90 || lat < -90 ) {
+			// Out of range!
+			return;
+		}
+
+		var geojson = {
+			"type" : "Feature",
+			"geometry" : { 
+				"type" : "Point",
+				"coordinates" : [ parseFloat(lat), parseFloat(lng) ]
+			},
+			"properties" : {}
+		};
+
+		jQuery(this).find('input[data-name="geojson"]').val(JSON.stringify(geojson));
+	}
+
+
 	if( typeof acf.add_action !== 'undefined' ) {
-	
+
 		/*
 		*  ready append (ACF5)
 		*
@@ -23,22 +107,22 @@
 		*  @param	$el (jQuery selection) the jQuery element which contains the ACF fields
 		*  @return	n/a
 		*/
-		
+
 		acf.add_action('ready append', function( $el ){
-			
+
 			// search $el for fields of type 'geometa'
 			acf.get_fields({ type : 'geometa'}, $el).each(function(){
-				
+
 				initialize_field( $(this) );
-				
+
 			});
-			
+
 		});
-		
-		
+
+
 	} else {
-		
-		
+
+
 		/*
 		*  acf/setup_fields (ACF4)
 		*
@@ -53,18 +137,18 @@
 		*
 		*  @return	n/a
 		*/
-		
+
 		$(document).on('acf/setup_fields', function(e, postbox){
-			
+
 			$(postbox).find('.field[data-field_type="geometa"]').each(function(){
-				
+
 				initialize_field( $(this) );
-				
+
 			});
-		
+
 		});
-	
-	
+
+
 	}
 
 
