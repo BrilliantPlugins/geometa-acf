@@ -177,6 +177,7 @@ if( !class_exists('acf_field_geometa') ) :
 				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
 			} else if ( $field[ 'user_input_type' ] == 'map' ){
+				$map_options = array();
 				echo '<div class="acfgeometa_map_wrap">';
 				echo '<div class="acfgeometa_map" data-map="' . htmlentities( json_encode( $map_options ) ) . '">The map is loading...</div>';
 				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';

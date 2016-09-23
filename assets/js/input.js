@@ -9,7 +9,11 @@
 	}
 
 	function make_maps(i,wrapperdiv) {
-		var div = jQuery(wrapperdiv).find('.acfgeometa_map')[0];
+		var div = jQuery(wrapperdiv).find('.acfgeometa_map');
+		if ( div.data( 'map_loaded' ) === true ) {
+			return;
+		}
+		div = div[0];
 		div.innerHTML = '';
 		var map = L.map(div).setView([0,0],1);
 
@@ -62,6 +66,8 @@
 		if ( drawnItems.getLayers().length > 0 ) {
 			map.fitBounds(drawnItems.getBounds());
 		}
+
+		jQuery( div ).data( 'map_loaded', true );
 	}
 
 	function make_ll_to_geojson(e){
