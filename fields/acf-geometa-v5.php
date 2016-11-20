@@ -223,7 +223,7 @@ if( !class_exists('acf_field_geometa') ) :
 		// register & include CSS
 		wp_register_style( 'acf-input-geometa-leaflet1-css', "{$url}assets/css/leaflet.css", array(), $version );
 		wp_register_style( 'acf-input-geometa-leaflet-locate-control-css', "{$url}assets/css/L.Control.Locate.min.css", array('acf-input-geometa-leaflet1-css'), $version );
-		wp_register_style( 'acf-input-geometa-fontawesome', "{$url}assets/css/font-awesome.min.css", array('acf-input-geometa-leaflet1-css'), $version );
+		// wp_register_style( 'acf-input-geometa-fontawesome', "{$url}assets/css/font-awesome.min.css", array('acf-input-geometa-leaflet1-css'), $version );
 		wp_register_style( 'acf-input-geometa-leaflet-draw-css', "{$url}assets/Leaflet.draw/leaflet.draw.css", array('acf-input-geometa-leaflet1-css'), $version );
 		wp_register_style( 'acf-input-geometa', "{$url}assets/css/input.css", array('acf-input','acf-input-geometa-leaflet-draw-css'), $version );
 

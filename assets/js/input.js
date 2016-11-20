@@ -1,6 +1,4 @@
 (function($){
-
-
 	function initialize_field( $el ) {
 
 		jQuery('.acfgeometa_map_wrap').each( make_maps );
@@ -24,7 +22,10 @@
 		}).addTo(map);
 
 		// Location control
-		L.control.locate({ icon: 'fa fa-location-arrow' }).addTo(map);
+		L.control.locate({ 
+			icon: 'pointer_marker',
+			iconLoading: 'pointer_marker_loading'
+		}).addTo(map);
 
 		// Draw control layer
 		var curgeojson = '';
@@ -96,9 +97,7 @@
 		jQuery(this).find('input[data-name="geojson"]').val(JSON.stringify(geojson));
 	}
 
-
 	if( typeof acf.add_action !== 'undefined' ) {
-
 		/*
 		*  ready append (ACF5)
 		*
@@ -123,11 +122,7 @@
 			});
 
 		});
-
-
 	} else {
-
-
 		/*
 		*  acf/setup_fields (ACF4)
 		*
@@ -144,17 +139,9 @@
 		*/
 
 		$(document).on('acf/setup_fields', function(e, postbox){
-
 			$(postbox).find('.field[data-field_type="geometa"]').each(function(){
-
 				initialize_field( $(this) );
-
 			});
-
 		});
-
-
 	}
-
-
 })(jQuery);
