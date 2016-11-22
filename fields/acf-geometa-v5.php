@@ -164,7 +164,7 @@ if( !class_exists('acf_field_geometa') ) :
 						array_key_exists( 'type', $json['geometry'] ) &&
 						$json['geometry']['type'] === 'Point' &&
 						array_key_exists('coordinates', $json['geometry']) &&
-					   	is_array( $json['geometry']['coordinates'] ) 
+						is_array( $json['geometry']['coordinates'] ) 
 					) {
 						$lat = $json['geometry']['coordinates'][0];
 						$lng = $json['geometry']['coordinates'][1];
@@ -203,395 +203,30 @@ if( !class_exists('acf_field_geometa') ) :
 		 */
 
 
-	function input_admin_enqueue_scripts() {
+		function input_admin_enqueue_scripts() {
 
-		// vars
-		$url = $this->settings['url'];
-		$version = $this->settings['version'];
+			// vars
+			$url = $this->settings['url'];
+			$version = $this->settings['version'];
 
 
-		// register & include JS
-		wp_register_script( 'acf-input-geometa-leaflet1-js', "{$url}assets/js/leaflet.js", array(), $version );
-		wp_register_script( 'acf-input-geometa-leaflet-draw-js', "{$url}assets/Leaflet.draw/leaflet.draw.js", array('acf-input-geometa-leaflet1-js'), $version );
-		wp_register_script( 'acf-input-geometa-leaflet-locate-control-js', "{$url}assets/js/L.Control.Locate.min.js", array('acf-input-geometa-leaflet1-js'), $version );
-		wp_register_script( 'acf-input-geometa', "{$url}assets/js/input.js", array('acf-input','acf-input-geometa-leaflet1-js', 'acf-input-geometa-leaflet-locate-control-js','acf-input-geometa-leaflet-draw-js'), $version );
+			// register & include JS
+			wp_register_script( 'acf-input-geometa-leaflet1-js', "{$url}assets/js/leaflet.js", array(), $version );
+			wp_register_script( 'acf-input-geometa-leaflet-draw-js', "{$url}assets/Leaflet.draw/leaflet.draw.js", array('acf-input-geometa-leaflet1-js'), $version );
+			wp_register_script( 'acf-input-geometa-leaflet-locate-control-js', "{$url}assets/js/L.Control.Locate.min.js", array('acf-input-geometa-leaflet1-js'), $version );
+			wp_register_script( 'acf-input-geometa', "{$url}assets/js/input.js", array('acf-input','acf-input-geometa-leaflet1-js', 'acf-input-geometa-leaflet-locate-control-js','acf-input-geometa-leaflet-draw-js'), $version );
 
-		wp_enqueue_script('acf-input-geometa');
+			wp_enqueue_script('acf-input-geometa');
 
 
+			// register & include CSS
+			wp_register_style( 'acf-input-geometa-leaflet1-css', "{$url}assets/css/leaflet.css", array(), $version );
+			wp_register_style( 'acf-input-geometa-leaflet-locate-control-css', "{$url}assets/css/L.Control.Locate.min.css", array('acf-input-geometa-leaflet1-css'), $version );
+			wp_register_style( 'acf-input-geometa-leaflet-draw-css', "{$url}assets/Leaflet.draw/leaflet.draw.css", array('acf-input-geometa-leaflet1-css'), $version );
+			wp_register_style( 'acf-input-geometa', "{$url}assets/css/input.css", array('acf-input','acf-input-geometa-leaflet-draw-css'), $version );
 
-		// register & include CSS
-		wp_register_style( 'acf-input-geometa-leaflet1-css', "{$url}assets/css/leaflet.css", array(), $version );
-		wp_register_style( 'acf-input-geometa-leaflet-locate-control-css', "{$url}assets/css/L.Control.Locate.min.css", array('acf-input-geometa-leaflet1-css'), $version );
-		// wp_register_style( 'acf-input-geometa-fontawesome', "{$url}assets/css/font-awesome.min.css", array('acf-input-geometa-leaflet1-css'), $version );
-		wp_register_style( 'acf-input-geometa-leaflet-draw-css', "{$url}assets/Leaflet.draw/leaflet.draw.css", array('acf-input-geometa-leaflet1-css'), $version );
-		wp_register_style( 'acf-input-geometa', "{$url}assets/css/input.css", array('acf-input','acf-input-geometa-leaflet-draw-css'), $version );
-
-		wp_enqueue_style('acf-input-geometa');
-	}
-
-
-		/*
-		 *  input_admin_head()
-		 *
-		 *  This action is called in the admin_head action on the edit screen where your field is created.
-		 *  Use this action to add CSS and JavaScript to assist your render_field() action.
-		 *
-		 *  @type	action (admin_head)
-		 *  @since	3.6
-		 *  @date	23/01/13
-		 *
-		 *  @param	n/a
-		 *  @return	n/a
-		 */
-
-	/*
-
-	function input_admin_head() {
-
-
-
-	}
-
-	 */
-
-
-		/*
-		 *  input_form_data()
-		 *
-		 *  This function is called once on the 'input' page between the head and footer
-		 *  There are 2 situations where ACF did not load during the 'acf/input_admin_enqueue_scripts' and 
-		 *  'acf/input_admin_head' actions because ACF did not know it was going to be used. These situations are
-		 *  seen on comments / user edit forms on the front end. This function will always be called, and includes
-		 *  $args that related to the current screen such as $args['post_id']
-		 *
-		 *  @type	function
-		 *  @date	6/03/2014
-		 *  @since	5.0.0
-		 *
-		 *  @param	$args (array)
-		 *  @return	n/a
-		 */
-
-	/*
-
-	function input_form_data( $args ) {
-
-
-
-	}
-
-	 */
-
-
-		/*
-		 *  input_admin_footer()
-		 *
-		 *  This action is called in the admin_footer action on the edit screen where your field is created.
-		 *  Use this action to add CSS and JavaScript to assist your render_field() action.
-		 *
-		 *  @type	action (admin_footer)
-		 *  @since	3.6
-		 *  @date	23/01/13
-		 *
-		 *  @param	n/a
-		 *  @return	n/a
-		 */
-
-	/*
-
-	function input_admin_footer() {
-
-
-
-	}
-
-	 */
-
-
-		/*
-		 *  field_group_admin_enqueue_scripts()
-		 *
-		 *  This action is called in the admin_enqueue_scripts action on the edit screen where your field is edited.
-		 *  Use this action to add CSS + JavaScript to assist your render_field_options() action.
-		 *
-		 *  @type	action (admin_enqueue_scripts)
-		 *  @since	3.6
-		 *  @date	23/01/13
-		 *
-		 *  @param	n/a
-		 *  @return	n/a
-		 */
-
-	/*
-
-	function field_group_admin_enqueue_scripts() {
-
-	}
-
-	 */
-
-
-		/*
-		 *  field_group_admin_head()
-		 *
-		 *  This action is called in the admin_head action on the edit screen where your field is edited.
-		 *  Use this action to add CSS and JavaScript to assist your render_field_options() action.
-		 *
-		 *  @type	action (admin_head)
-		 *  @since	3.6
-		 *  @date	23/01/13
-		 *
-		 *  @param	n/a
-		 *  @return	n/a
-		 */
-
-	/*
-
-	function field_group_admin_head() {
-
-	}
-
-	 */
-
-
-		/*
-		 *  load_value()
-		 *
-		 *  This filter is applied to the $value after it is loaded from the db
-		 *
-		 *  @type	filter
-		 *  @since	3.6
-		 *  @date	23/01/13
-		 *
-		 *  @param	$value (mixed) the value found in the database
-		 *  @param	$post_id (mixed) the $post_id from which the value was loaded
-		 *  @param	$field (array) the field array holding all the field options
-		 *  @return	$value
-		 */
-
-	/*
-
-	function load_value( $value, $post_id, $field ) {
-
-		return $value;
-
-	}
-
-	 */
-
-
-		/*
-		 *  update_value()
-		 *
-		 *  This filter is applied to the $value before it is saved in the db
-		 *
-		 *  @type	filter
-		 *  @since	3.6
-		 *  @date	23/01/13
-		 *
-		 *  @param	$value (mixed) the value found in the database
-		 *  @param	$post_id (mixed) the $post_id from which the value was loaded
-		 *  @param	$field (array) the field array holding all the field options
-		 *  @return	$value
-		 */
-
-	/*
-
-	function update_value( $value, $post_id, $field ) {
-
-		return $value;
-
-	}
-
-	 */
-
-
-		/*
-		 *  format_value()
-		 *
-		 *  This filter is appied to the $value after it is loaded from the db and before it is returned to the template
-		 *
-		 *  @type	filter
-		 *  @since	3.6
-		 *  @date	23/01/13
-		 *
-		 *  @param	$value (mixed) the value which was loaded from the database
-		 *  @param	$post_id (mixed) the $post_id from which the value was loaded
-		 *  @param	$field (array) the field array holding all the field options
-		 *
-		 *  @return	$value (mixed) the modified value
-		 */
-
-	/*
-
-	function format_value( $value, $post_id, $field ) {
-
-		// bail early if no value
-		if( empty($value) ) {
-
-			return $value;
-
+			wp_enqueue_style('acf-input-geometa');
 		}
-
-
-		// apply setting
-		if( $field['font_size'] > 12 ) { 
-
-			// format the value
-			// $value = 'something';
-
-		}
-
-
-		// return
-		return $value;
-	}
-
-	 */
-
-
-		/*
-		 *  validate_value()
-		 *
-		 *  This filter is used to perform validation on the value prior to saving.
-		 *  All values are validated regardless of the field's required setting. This allows you to validate and return
-		 *  messages to the user if the value is not correct
-		 *
-		 *  @type	filter
-		 *  @date	11/02/2014
-		 *  @since	5.0.0
-		 *
-		 *  @param	$valid (boolean) validation status based on the value and the field's required setting
-		 *  @param	$value (mixed) the $_POST value
-		 *  @param	$field (array) the field array holding all the field options
-		 *  @param	$input (string) the corresponding input name for $_POST value
-		 *  @return	$valid
-		 */
-
-	/*
-
-	function validate_value( $valid, $value, $field, $input ){
-
-		// Basic usage
-		if( $value < $field['custom_minimum_setting'] )
-		{
-			$valid = false;
-		}
-
-
-		// Advanced usage
-		if( $value < $field['custom_minimum_setting'] )
-		{
-			$valid = __('The value is too little!','acf-geometa'),
-		}
-
-
-		// return
-		return $valid;
-
-	}
-
-	 */
-
-
-		/*
-		 *  delete_value()
-		 *
-		 *  This action is fired after a value has been deleted from the db.
-		 *  Please note that saving a blank value is treated as an update, not a delete
-		 *
-		 *  @type	action
-		 *  @date	6/03/2014
-		 *  @since	5.0.0
-		 *
-		 *  @param	$post_id (mixed) the $post_id from which the value was deleted
-		 *  @param	$key (string) the $meta_key which the value was deleted
-		 *  @return	n/a
-		 */
-
-	/*
-
-	function delete_value( $post_id, $key ) {
-
-
-
-	}
-
-	 */
-
-
-		/*
-		 *  load_field()
-		 *
-		 *  This filter is applied to the $field after it is loaded from the database
-		 *
-		 *  @type	filter
-		 *  @date	23/01/2013
-		 *  @since	3.6.0	
-		 *
-		 *  @param	$field (array) the field array holding all the field options
-		 *  @return	$field
-		 */
-
-	/*
-
-	function load_field( $field ) {
-
-		return $field;
-
-	}	
-
-	 */
-
-
-		/*
-		 *  update_field()
-		 *
-		 *  This filter is applied to the $field before it is saved to the database
-		 *
-		 *  @type	filter
-		 *  @date	23/01/2013
-		 *  @since	3.6.0
-		 *
-		 *  @param	$field (array) the field array holding all the field options
-		 *  @return	$field
-		 */
-
-	/*
-
-	function update_field( $field ) {
-
-		return $field;
-
-	}	
-
-	 */
-
-
-		/*
-		 *  delete_field()
-		 *
-		 *  This action is fired after a field is deleted from the database
-		 *
-		 *  @type	action
-		 *  @date	11/02/2014
-		 *  @since	5.0.0
-		 *
-		 *  @param	$field (array) the field array holding all the field options
-		 *  @return	n/a
-		 */
-
-	/*
-
-	function delete_field( $field ) {
-
-
-
-	}	
-
-	 */
-
 
 	}
 
@@ -602,5 +237,3 @@ new acf_field_geometa( $this->settings );
 
 // class_exists check
 endif;
-
-?>
