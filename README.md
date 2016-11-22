@@ -8,6 +8,7 @@ Store real spatial data with ACF, using the WP-GeoMeta library.
 
 This ACF field type is compatible with:
 * ACF 5
+* ACF 4
 
 ### Installation
 
