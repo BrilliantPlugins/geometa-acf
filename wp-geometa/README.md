@@ -20,6 +20,14 @@ WP GeoMeta isn't just a plugin, it's also a library which other plugins can
 take advantage of. It's meant to be a spatial platform that other GIS and
 mapping plugins can build on. 
 
+Developers and Hackers
+----------------------
+
+Interested in using WP-GeoMeta in your plugin or just want the nitty-gritty 
+on working with WP-GeoMeta? Check out [DEVELOPERS.md](DEVELOPERS.md).
+
+Want to hack on WP-GeoMeta itself? You should also check out [HACKING.md](HACKING.md).
+
 Usage
 -----
 
@@ -172,7 +180,7 @@ If you are using MySQL 5.7, good for you, and consider converting your geo table
 to InnoDB! (and let me know how it goes).
 
 ### PHP
-PHP 5.2.4 and higher are support, just like WordPress's minimum version.
+PHP 5.2.4 and higher are supported, just like WordPress's minimum version.
 Please report any PHP errors you come across and we'll fix them up.
 
 Frequently Asked Questions

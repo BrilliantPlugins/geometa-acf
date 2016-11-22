@@ -221,7 +221,6 @@ class WP_GeoUtil {
 	 */
 	private static $found_funcs = array();
 
-
 	/**
 	 * The instance variable
 	 *
@@ -238,12 +237,19 @@ class WP_GeoUtil {
 			self::$_instance = new self;
 			self::$geojson = new GeoJSON();
 			self::$geowkt = new WKT();
-			self::$srid = apply_filters( 'wp_geoquery_srid', 4326 );
+			self::$srid = 4326;
+			add_action( 'plugins_loaded', array( 'WP_GeoUtil', 'plugins_loaded' ) );
 		}
 
 		return self::$_instance;
 	}
 
+	/**
+	 * Load in the SRID after plugins are loaded.
+	 */
+	public static function plugins_loaded() {
+		WP_GeoUtil::$srid = apply_filters( 'wp_geoquery_srid', 4326 );
+	}
 
 	/**
 	 * Merge one or more pieces of geojson together. Each item could be a FeatureCollection
@@ -273,6 +279,9 @@ class WP_GeoUtil {
 		);
 
 		foreach ( $fragments as $fragment ) {
+
+			$fragment = maybe_unserialize( $fragment );
+
 			if ( is_object( $fragment ) ) {
 				$fragment = (array) $fragment;
 			} else if ( is_string( $fragment ) ) {
@@ -311,6 +320,8 @@ class WP_GeoUtil {
 	 * @return A WKT geometry string.
 	 */
 	public static function metaval_to_geom( $metaval = '' ) {
+		$metaval = maybe_unserialize( $metaval );
+
 		// Let other plugins support non GeoJSON geometry.
 		$maybe_geom = apply_filters( 'wpgq_metaval_to_geom', $metaval );
 

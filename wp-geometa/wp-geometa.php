@@ -11,7 +11,7 @@
  * Description: Store and search spatial metadata while taking advantage of MySQL spatial types and indexes.
  * Author: Michael Moore
  * Author URI: http://cimbura.com
- * Version: 0.2.1
+ * Version: 0.2.2
  * Code Name: Penny Priddy
  * Text Domain: wp-geometa
  * Domain Path: /lang
@@ -215,4 +215,19 @@ if ( ! function_exists( 'wpgeometa_activation_hook' ) ) {
 		$wpgeo->create_geo_tables();
 	}
 	register_activation_hook( __FILE__ , 'wpgeometa_activation_hook' );
+}
+
+/**
+ * Set up handling for standard latlng fields
+ */
+if ( ! function_exists( 'wpgeometa_setup_latlng_fields' ) ) {
+	/**
+	 * A simple callback function to register the WordPress Geodata standard latitude and longitude fields
+	 *
+	 * See also https://codex.wordpress.org/Geodata for more info.
+	 */
+	function wpgeometa_setup_latlng_fields() {
+		WP_GeoMeta::add_latlng_field( 'geo_latitude', 'geo_longitude', 'geo_' );
+	}
+	add_action( 'init', 'wpgeometa_setup_latlng_fields' );
 }
