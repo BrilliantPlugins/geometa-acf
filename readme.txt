@@ -11,6 +11,8 @@ Store real spatial data with ACF, using the WP-GeoMeta library.
 
 == Description ==
 
+TODO: Explain how/why this is different than a map field
+
 GeoMeta for ACF Stores location information using
 [ACF](https://www.advancedcustomfields.com/) and the [WP-GeoMeta
 library](http://wherepress.com/projects-and-plugins/wp-geometa/).
