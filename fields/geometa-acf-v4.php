@@ -75,9 +75,9 @@ if( !class_exists('acf_field_geometa') ) :
 				'value'		=>	$field['user_input_type'],
 				'layout'	=>	'vertical',
 				'choices'	=>	array(
-					'latlng'   => __('Latitude and Longitude','acf-geometa'),
-					'map'      => __('A map with drawing tools','acf-geometa'),
-					'geojson'  => __('GeoJSON text input','acf-geometa')
+					'latlng'   => __('Latitude and Longitude','geometa-acf'),
+					'map'      => __('A map with drawing tools','geometa-acf'),
+					'geojson'  => __('GeoJSON text input','geometa-acf')
 				)
 			));
 

@@ -1,12 +1,11 @@
 <?php
 /*
-Plugin Name: Advanced Custom Fields: GeoMeta
-Plugin URI: https://bitbucket.org/cimburacom/acf-geometa
+Plugin Name: GeoMeta for ACF
+Plugin URI: https://github.com/cimburadotcom/geometa-acf
 Description: Store real spatial data with ACF, using the WP-GeoMeta library.
 Version: 0.0.1
 Author: Cimbura.com
 Author URI: http://cimbura.com
-License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
@@ -44,7 +43,7 @@ class acf_plugin_geometa {
 		
 		// set text domain
 		// https://codex.wordpress.org/Function_Reference/load_plugin_textdomain
-		load_plugin_textdomain( 'acf-geometa', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' ); 
+		load_plugin_textdomain( 'geometa-acf', false, plugin_basename( dirname( __FILE__ ) ) . '/lang' ); 
 		
 		
 		// include field
@@ -74,7 +73,7 @@ class acf_plugin_geometa {
 		
 		
 		// include
-		include_once('fields/acf-geometa-v' . $version . '.php');
+		include_once('fields/geometa-acf-v' . $version . '.php');
 		
 	}
 	
