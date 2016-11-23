@@ -1,6 +1,6 @@
 === Advanced Custom Fields: GeoMeta Field ===
 Contributors: stuporglue, cimburadotcom
-Tags: GIS, Spatial, ACF, WP-GeoMeta
+Tags: GIS, Spatial, ACF, WP-GeoMeta, GeoJSON
 Requires at least: 4.4.0
 Tested up to: 4.6.1
 Stable tag: trunk
@@ -11,27 +11,20 @@ Store real spatial data with ACF, using the WP-GeoMeta library.
 
 == Description ==
 
-TODO: Explain how/why this is different than a map field
+GeoMeta for ACF is an easy way to store location information about posts, pages,
+users or other content types that ACF supports. The default input is a map
+with drawing tools to let the user draw markers, lines and polygons.
+Alternatively you can accept latitude and longitude values, or raw GeoJSON
+text.
 
-GeoMeta for ACF Stores location information using
-[ACF](https://www.advancedcustomfields.com/) and the [WP-GeoMeta
-library](http://wherepress.com/projects-and-plugins/wp-geometa/).
+GeoMeta for ACF supports for both ACF version 4  and 5.
 
-GeoMeta for ACF is an easy way to store spatial information about posts, pages,
-users or other content types that ACF supports.
+Why use GeoMeta for ACF instead of one of the other map inputs for ACF? 
 
-ACF, Advanced Custom Fields, is an easy and convenient way to add custom meta
-fields to posts, pages, users and other content types types. It offers an
-easy to use UI to manage which custom meta types correspond with which post 
-types and even gives you conditional controls to determine when those custom 
-meta types show up. 
-
-WP-GeoMeta is a library (built in to ACF GeoMeta) that detects when GeoJSON is
-being stored as metadata and stores it a spatially-enabled MySQL metadata 
-tables. 
-
-This lets you run spatial queries using WP_Query and other functions that use
-WP_Meta_Query under the hood.
+GeoMeta for ACF uses WP-GeoMeta under the hood, which means that you're
+actually storing spatial meta data, not just text. With the WP-GeoMeta library
+you have access to all of the spatial functions MySQL supports to search and
+filter your WordPress posts and users. 
 
 
 = Compatibility =
@@ -72,8 +65,11 @@ me](https://twitter.com/stuporglue) on twitter.
 
 == Screenshots ==
 
+Coming soon!
 
 == Changelog ==
 
 = 0.0.1 =
 * Initial Release.
+* Support for Map input, lat/lng fields and raw GeoJSON input
+* Support for ACF v4 and ACF Pro/v5

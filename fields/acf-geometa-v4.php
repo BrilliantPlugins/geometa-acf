@@ -126,8 +126,8 @@ if( !class_exists('acf_field_geometa') ) :
 				}
 
 				echo '<div class="acfgeometa_ll_wrap">';
-				echo '<label>Latitude</label><input type="text" data-name="lat" value="' . $lat . '"><br>';
-				echo '<label>Longitude</label><input type="text" data-name="lng" value="' . $lng. '">';
+				echo '<label>Latitude </label><br><input type="text" data-name="lat" value="' . $lat . '"><br>';
+				echo '<label>Longitude </label><br><input type="text" data-name="lng" value="' . $lng. '"><br>';
 				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
 			} else if ( $field[ 'user_input_type' ] == 'map' ){
