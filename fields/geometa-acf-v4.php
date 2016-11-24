@@ -61,7 +61,7 @@ if( !class_exists('acf_field_geometa') ) :
 		function create_options( $field )
 		{
 			// key is needed in the field names to correctly save the data
-			$key = $field['name'];
+			$key = $field['key'];
 
 			// Create Field Options HTML
 			print '<tr class="field_option field_option_' . $this->name . '">';
@@ -71,7 +71,7 @@ if( !class_exists('acf_field_geometa') ) :
 
 			do_action('acf/create_field', array(
 				'type'		=>	'radio',
-				'name'		=>	'user_input_type',
+				'name'		=>	$field['name'],
 				'value'		=>	$field['user_input_type'],
 				'layout'	=>	'vertical',
 				'choices'	=>	array(
@@ -99,46 +99,7 @@ if( !class_exists('acf_field_geometa') ) :
 
 		function create_field( $field )
 		{
-			if ( $field[ 'user_input_type' ] == 'geojson' ) {
-				echo '<textarea placeholder="Paste GeoJSON here" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '"></textarea>';
-			} else if ( $field[ 'user_input_type' ] == 'latlng' ){
-
-				$lat = '';
-				$lng = '';
-				if( !empty( $field['value'] ) ) {
-					$json = json_decode( $field['value'], true );
-
-					// Better safe than sorry?
-					if ( 
-						!empty( $json ) && 
-						array_key_exists( 'type', $json ) && 
-						$json['type'] === 'Feature' &&
-						array_key_exists( 'geometry', $json ) && 
-						is_array( $json['geometry'] ) &&
-						array_key_exists( 'type', $json['geometry'] ) &&
-						$json['geometry']['type'] === 'Point' &&
-						array_key_exists('coordinates', $json['geometry']) &&
-						is_array( $json['geometry']['coordinates'] ) 
-					) {
-						$lat = $json['geometry']['coordinates'][0];
-						$lng = $json['geometry']['coordinates'][1];
-					}
-				}
-
-				echo '<div class="acfgeometa_ll_wrap">';
-				echo '<label>Latitude </label><br><input type="text" data-name="lat" value="' . $lat . '"><br>';
-				echo '<label>Longitude </label><br><input type="text" data-name="lng" value="' . $lng. '"><br>';
-				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
-				echo '</div>';
-			} else if ( $field[ 'user_input_type' ] == 'map' ){
-				$map_options = array();
-				echo '<div class="acfgeometa_map_wrap">';
-				echo '<div class="acfgeometa_map" data-map="' . htmlentities( json_encode( $map_options ) ) . '">The map is loading...</div>';
-				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
-				echo '</div>';
-			} else {
-				echo "Sorry, {$field[ 'user_input_type' ]} input type isn't supported yet!\n";
-			}
+			include( dirname( __FILE__ ) . '/geometa-acf-common.php' );
 		}
 
 
@@ -286,8 +247,7 @@ if( !class_exists('acf_field_geometa') ) :
 
 		function update_field( $field, $post_id )
 		{
-			$a = 1;
-			$field['user_input_type'] = $_POST['user_input_type'];
+			$field['user_input_type'] = $_POST[ $field['key'] ];
 			// Note: This function can be removed if not used
 			return $field;
 		}
