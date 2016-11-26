@@ -285,7 +285,7 @@ if( !class_exists('acf_field_geometa') ) :
 		 *  @return	$field - the modified field
 		 */
 
-		function update_field( $field, $post_id )
+		function update_field( $field )
 		{
 			$field['user_input_type'] = $_POST[ $field['key'] ];
 			// Note: This function can be removed if not used
