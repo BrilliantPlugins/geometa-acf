@@ -3,7 +3,7 @@
 Plugin Name: GeoMeta for ACF
 Plugin URI: https://github.com/cimburadotcom/geometa-acf
 Description: Store real spatial data with ACF, using the WP-GeoMeta library.
-Version: 0.0.1
+Version: 0.0.2
 Author: Cimbura.com
 Author URI: http://cimbura.com
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -35,7 +35,7 @@ class acf_plugin_geometa {
 		
 		// vars
 		$this->settings = array(
-			'version'	=> '0.0.1',
+			'version'	=> '0.0.2',
 			'url'		=> plugin_dir_url( __FILE__ ),
 			'path'		=> plugin_dir_path( __FILE__ )
 		);
@@ -68,13 +68,8 @@ class acf_plugin_geometa {
 	
 	function include_field_types( $version = false ) {
 		
-		// support empty $version
-		if( !$version ) $version = 4;
-		
-		
 		// include
-		include_once('fields/geometa-acf-v' . $version . '.php');
-		
+		include_once('fields/geometa-acf.php');
 	}
 	
 }

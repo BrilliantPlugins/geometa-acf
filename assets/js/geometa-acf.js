@@ -55,13 +55,26 @@
 			};
 		})(jQuery(this).find('input[data-name="geojson"]'));
 
-		map.on('draw:created', function (e) {
+		map.on(L.Draw.Event.CREATED, function (e) {
+			console.log("Created layer");
 			drawnItems.addLayer(e.layer);
 			savevalfunc(e);
 		});
 
-		map.on( 'draw:edited', savevalfunc );
-		map.on( 'draw:deleted', savevalfunc );
+		map.on( L.Draw.Event.EDITED, function(e){
+			console.log("Edited layer!");
+			savevalfunc( e );
+		});
+
+		map.on( L.Draw.Event.EDITSTOP, function(e){
+			console.log("Edit stop layer!");
+			savevalfunc( e );
+		});
+
+		map.on( L.Draw.Event.DELETESTOP, function(e){
+			console.log("Deleted layer!");
+			savevalfunc( e );
+		});
 
 		// If we have existing geojson, fit bounds
 		if ( drawnItems.getLayers().length > 0 ) {
