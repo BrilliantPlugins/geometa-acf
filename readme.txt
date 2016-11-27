@@ -69,6 +69,11 @@ Coming soon!
 
 == Changelog ==
 
+= 0.0.2 =
+* Set up I18N support and Portuguese translation
+* Code cleanup
+* A start on code documentation
+
 = 0.0.1 =
 * Initial Release.
 * Support for Map input, lat/lng fields and raw GeoJSON input
