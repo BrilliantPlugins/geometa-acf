@@ -1,16 +1,14 @@
 <?php
-
 /**
- * This class should be compatible with both v4 and v5.
+ * This class should be compatible with both ACF v4 and v5.
+ * @package geometa-acf
  */
 
 // exit if accessed directly
-if( ! defined( 'ABSPATH' ) ) exit;
-
+defined( 'ABSPATH' ) or die( __( 'No direct access', 'geometa-acf' ) );
 
 // check if class already exists
-if( !class_exists('acf_field_geometa') ) :
-
+if( !class_exists('acf_field_geometa') ) {
 
 	class acf_field_geometa extends acf_field {
 
@@ -30,7 +28,6 @@ if( !class_exists('acf_field_geometa') ) :
 		 *  @param	n/a
 		 *  @return	n/a
 		 */
-
 		function __construct( $settings ) {
 
 			/*
@@ -38,17 +35,14 @@ if( !class_exists('acf_field_geometa') ) :
 			 */
 			$this->name = 'geometa';
 
-
 			/*
 			 *  label (string) Multiple words, can include spaces, visible when selecting a field type
 			 */
-			$this->label = __('GeoMeta', 'geometa-acf');
-
+			$this->label = 'GeoMeta';
 
 			/*
 			 *  category (string) basic | content | choice | relational | jquery | layout | CUSTOM GROUP NAME
 			 */
-
 			$this->category = __('basic','acf');
 
 
@@ -59,7 +53,6 @@ if( !class_exists('acf_field_geometa') ) :
 			/*
 			 *  settings (array) Store plugin settings (url, path, version) as a reference for later use with assets
 			 */
-
 			$this->settings = $settings;
 
 
@@ -80,7 +73,6 @@ if( !class_exists('acf_field_geometa') ) :
 		 *  @param	$field (array) the $field being edited
 		 *  @return	n/a
 		 */
-
 		function render_field_settings( $field ) {
 
 			/*
@@ -107,9 +99,7 @@ if( !class_exists('acf_field_geometa') ) :
 					'geojson'            => __('GeoJSON text input','geometa-acf')
 				)
 			));
-
 		}
-
 
 		/*
 		 *  create_field()
@@ -122,14 +112,9 @@ if( !class_exists('acf_field_geometa') ) :
 		 *  @since	3.6
 		 *  @date	23/01/13
 		 */
-
-		function create_field( $field )
-		{
+		function create_field( $field ) {
 			return $this->render_field( $field );
 		}
-
-
-
 
 		/*
 		 *  render_field()
@@ -145,10 +130,9 @@ if( !class_exists('acf_field_geometa') ) :
 		 *  @param	$field (array) the $field being edited
 		 *  @return	n/a
 		 */
-
 		function render_field( $field ) {
 			if ( $field[ 'user_input_type' ] == 'geojson' ) {
-				echo '<textarea placeholder="Paste GeoJSON here" name="' . esc_attr($field['name']) . '" >' . esc_attr($field['value']) . '</textarea>';
+				echo '<textarea placeholder="' . esc_attr_( 'Paste GeoJSON here', 'geometa-acf' ) . '" name="' . esc_attr($field['name']) . '" >' . esc_attr($field['value']) . '</textarea>';
 			} else if ( $field[ 'user_input_type' ] == 'latlng' ) {
 				$lat = '';
 				$lng = '';
@@ -173,8 +157,8 @@ if( !class_exists('acf_field_geometa') ) :
 				}
 
 				echo '<div class="acfgeometa_ll_wrap">';
-				echo '<label>Latitude </label><br><input type="text" data-name="lat" value="' . $lat . '"><br>';
-				echo '<label>Longitude </label><br><input type="text" data-name="lng" value="' . $lng. '"><br>';
+				echo '<label>' . esc_html__('Latitude','geometa-acf') . ' </label><br><input type="text" data-name="lat" value="' . $lat . '"><br>';
+				echo '<label>' . esc_html__('Longitude','geometa-acf') . ' </label><br><input type="text" data-name="lng" value="' . $lng. '"><br>';
 				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
 			} else if ( $field[ 'user_input_type' ] == 'map' ) {
@@ -184,7 +168,7 @@ if( !class_exists('acf_field_geometa') ) :
 				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
 			} else {
-				echo "Sorry, {$field[ 'user_input_type' ]} input type isn't supported yet!\n";
+				echo sprintf( esc_html__( 'Sorry, %1$s input type isn\'t supported yet!', 'geometa-acf' ), $field[ 'user_input_type' ] )  . "\n";
 			}
 		}
 
@@ -199,9 +183,6 @@ if( !class_exists('acf_field_geometa') ) :
 		 *  @since	3.6
 		 *  @date	23/01/13
 		 */
-
-
-
 		function input_admin_enqueue_scripts() {
 
 			// vars
@@ -217,7 +198,6 @@ if( !class_exists('acf_field_geometa') ) :
 
 			wp_enqueue_script('acf-input-geometa');
 
-
 			// register & include CSS
 			wp_register_style( 'acf-input-geometa-leaflet1-css', "{$url}assets/css/leaflet.css", array(), $version );
 			wp_register_style( 'acf-input-geometa-leaflet-locate-control-css', "{$url}assets/css/L.Control.Locate.min.css", array('acf-input-geometa-leaflet1-css'), $version );
@@ -226,8 +206,6 @@ if( !class_exists('acf_field_geometa') ) :
 
 			wp_enqueue_style('acf-input-geometa');
 		}
-
-
 
 		/*
 		 *  create_options()
@@ -241,16 +219,14 @@ if( !class_exists('acf_field_geometa') ) :
 		 *
 		 *  @param	$field	- an array holding all the field's data
 		 */
-
-		function create_options( $field )
-		{
+		function create_options( $field ) {
 			// key is needed in the field names to correctly save the data
 			$key = $field['key'];
 
 			// Create Field Options HTML
 			print '<tr class="field_option field_option_' . $this->name . '">';
 			print '<td class="label"><label>' . __("Data Input Format",'acf') . '</label>';
-			print '<p class="description">' . __("How should the user input location data?",'acf') . '</p>';
+			print '<p class="description">' . __("How should the user input location data?",'geometa-acf') . '</p>';
 			print '</td><td>';
 
 			do_action('acf/create_field', array(
@@ -268,8 +244,6 @@ if( !class_exists('acf_field_geometa') ) :
 			print '</td></tr>';
 		}
 
-
-
 		/*
 		 *  update_field()
 		 *
@@ -284,20 +258,14 @@ if( !class_exists('acf_field_geometa') ) :
 		 *
 		 *  @return	$field - the modified field
 		 */
-
 		function update_field( $field )
 		{
 			$field['user_input_type'] = $_POST[ $field['key'] ];
 			// Note: This function can be removed if not used
 			return $field;
 		}
-
 	}
 
-
-// initialize
-new acf_field_geometa( $this->settings );
-
-
-// class_exists check
-endif;
+	// initialize
+	new acf_field_geometa( $this->settings );
+}
