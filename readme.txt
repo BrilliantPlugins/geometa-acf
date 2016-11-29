@@ -59,7 +59,8 @@ No one has actually asked any questions yet!
 = How can I run spatial queries? =
 
 GeoMeta for ACF uses WP-GeoMeta internally.  For sample queries, please see
-the [WP-GeoMeta documentation](https://github.com/cimburadotcom/wp-geometa).
+the [WP-GeoMeta
+documentation](https://github.com/cimburadotcom/wp-geometa#querying).
 
 = Where can I get help with GIS and WordPress? = 
 
