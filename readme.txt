@@ -30,19 +30,27 @@ filter your WordPress posts and users.
 = Compatibility =
 
 This ACF field type is compatible with:
+
 * ACF 5 / ACF Pro
 * ACF 4
 
 == Installation ==
 
-Install this plugin in the usual WordPress way, then go to your WordPress
-dashboard to Tools::WP GeoMeta to see the status of your spatial data and
-to use the included tools.
+Be sure that Advanced Custom Fields is installed. You can use Advanced Custom
+Fields (v4) or Advanced Custom Fields PRO (v5). Version 4 is [in the
+plugin repository](https://wordpress.org/plugins/advanced-custom-fields/). ACF
+PRO is [available from
+https://www.advancedcustomfields.com/pro/](https://www.advancedcustomfields.com/pro/).
+
+With ACF installed, you can install this plugin in the usual WordPress way.
 
 1. Upload the plugin files to the `/wp-content/plugins/geometa-acf` directory,
 	or install the plugin through the WordPress plugin screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress.
-3. Create a new field via ACF and select the GeoMeta type.
+
+
+Create a new field in ACF and select the GeoMeta field type.
+
 
 == Frequently Asked Questions ==
 
@@ -50,8 +58,8 @@ No one has actually asked any questions yet!
 
 = How can I run spatial queries? =
 
-For sample queries, please see the [WP-GeoMeta
-documentation](https://github.com/cimburadotcom/wp-geometa);
+GeoMeta for ACF uses WP-GeoMeta internally.  For sample queries, please see
+the [WP-GeoMeta documentation](https://github.com/cimburadotcom/wp-geometa).
 
 = Where can I get help with GIS and WordPress? = 
 
@@ -78,3 +86,8 @@ Coming soon!
 * Initial Release.
 * Support for Map input, lat/lng fields and raw GeoJSON input
 * Support for ACF v4 and ACF Pro/v5
+
+== Upgrade Notice ==
+= 0.0.2 = 
+* You don't have GeoMeta for ACF yet, so there's no need to read this upgrade
+notice!
