@@ -132,7 +132,7 @@ if( !class_exists('acf_field_geometa') ) {
 		 */
 		function render_field( $field ) {
 			if ( $field[ 'user_input_type' ] == 'geojson' ) {
-				echo '<textarea placeholder="' . esc_attr_( 'Paste GeoJSON here', 'geometa-acf' ) . '" name="' . esc_attr($field['name']) . '" >' . esc_attr($field['value']) . '</textarea>';
+				echo '<textarea placeholder="' . esc_attr__( 'Paste GeoJSON here', 'geometa-acf' ) . '" name="' . esc_attr($field['name']) . '" >' . esc_attr($field['value']) . '</textarea>';
 			} else if ( $field[ 'user_input_type' ] == 'latlng' ) {
 				$lat = '';
 				$lng = '';

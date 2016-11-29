@@ -27,14 +27,19 @@ This ACF field type is compatible with:
 
 ### Installation
 
-Install this plugin in the usual WordPress way, then go to your WordPress
-dashboard to Tools::WP GeoMeta to see the status of your spatial data and
-to use the included tools.
+Be sure that Advanced Custom Fields is installed. You can use Advanced Custom
+Fields (v4) or Advanced Custom Fields PRO (v5). Version 4 is [in the
+plugin repository](https://wordpress.org/plugins/advanced-custom-fields/). ACF
+PRO is [available from
+https://www.advancedcustomfields.com/pro/](https://www.advancedcustomfields.com/pro/).
+
+With ACF installed, you can install this plugin in the usual WordPress way.
 
 1. Upload the plugin files to the `/wp-content/plugins/geometa-acf` directory,
 	or install the plugin through the WordPress plugin screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress.
-3. Create a new field via ACF and select the GeoMeta type.
+
+Create a new field in ACF and select the GeoMeta field type.
 
 ### Usage
 
