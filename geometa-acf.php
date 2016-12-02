@@ -56,7 +56,7 @@ if( !class_exists('acf_plugin_geometa') ) {
 			add_action('acf/register_fields', 		array($this, 'include_field_types')); // v4
 
 			// Include the WP-GeoMeta library
-			require_once( dirname( __FILE__ ) . '/wp-geometa/wp-geometa.php' );
+			require_once( dirname( __FILE__ ) . '/wp-geometa-lib/wp-geometa-lib-loader.php' );
 		}
 
 
