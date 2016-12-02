@@ -49,3 +49,96 @@ To unlock this plugin's full potential you can query and filter your data using 
 
 For sample queries and more information, please see the [WP-GeoMeta
 documentation](https://github.com/cimburadotcom/wp-geometa);
+
+### Bring Your Own Geocoder
+
+GeoMeta for ACF includes an advanced field, *Bring Your Own Geocoder* (BYOG). 
+
+This is provided because good geocoders require an API key which *you* will need to obtain, and the fields you 
+collect may be different that the fields someone else collects.
+
+BYOG doesn't give the user a way to enter spatial data. Instead it provides a button that trigger a JavaScript 
+action when clicked action that you can do your own GeoCoding. It also provides a callback to store the in a 
+hidden GeoJSON field. 
+
+#### Use Case
+
+You might have a set of text fields *Street*, *City*, *State*, *ZIP*. 
+
+When the editor clicks the Geocode button, the JavaScript event `geometa-acf/byo-geocode` will fire. 
+
+The handler will receive 3 arguments: 
+ 1. The triggered event
+ 2. The original click event
+ 3. The callback handler
+
+You will find the fields you want to get data from, and construct a Geocoding request. With the results
+you construct a GeoJSON Feature and then submit it to the callback. 
+
+
+In pseudo code it would look like this:
+```
+jQuery(document).on('geometa-acf/byo-geocode',function(e, origEvent, callback){
+		// Do your geocoding
+		var results = do_my_geocoding();
+
+		// If your geocoding results aren't in GeoJSON format, then create a GeoJSON object
+		var geojson = my_results_to_geojson( results );
+
+		// Submit a GeoJSON object to the callback
+		callback( geojson );
+}
+```
+
+
+A more real life example might look something like this, using Geocod.io as the Geocoder:
+
+```
+jQuery(document).on('geometa-acf/byo-geocode',function(e, origEvent, callback){
+
+	// Make an AJAX call to Geocod.io and get a promise back.
+ 	var geopromise = jQuery.getJSON('https://api.geocod.io/v1/geocode', {
+		'street' : jQuery('input[name$="[field_57d19a6b27644]"]').val(),
+		'city' : jQuery('input[name$="[field_57d199a227642]"]').val(),
+		'state' : jQuery('input[name$="[field_57d199ac27643]"]').val(),
+		'postal_code' :  jQuery('input[name$="[field_57d19a7727645]"]').val(),
+ 		'api_key': myfile.geocodio_api_key // Use wp_localize_script to not hard code your API key into your JavaScript!
+ 	}, );
+
+	// When the promise has been fulfilled, handle success or failure
+	geopromise.then(
+		function( success ){
+
+			var geojson;
+
+			// On success, if we got results...
+			if ( success.results.length > 0 ) {
+				var res = success.results[0];
+
+				// And the accurace is better than state level (1 = rooftop, 5 = city level, 6 = statelevel)
+				if ( res.accuracy <= 5 )  {
+
+					// Make a GeoJSON object
+					var geojson = {
+						'type': 'Feature',
+						'geometry': {
+							'type' : 'Point',
+							'coordinates' : [ res.location.lng, res.location.lat ]
+						},
+						'properties' : res.address_components
+					};
+				}
+			}
+
+			// And pass the object into the callback
+			callback( geojson );
+		}, function( failure ) {
+
+			// Otherwise pass in anything else (or nothing) to clear the current value,
+			// or don't call the callback at all to leave the existing result in place
+			callback();
+		}
+	);
+});
+
+```

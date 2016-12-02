@@ -17,3 +17,21 @@
 	width: 20px;
 	margin-top: 3px;
 }
+
+.acfgeometa_geocode_button {
+	position: relative;
+	cursor: pointer;
+}
+.acfgeometa_geocode_button::after {
+	content: "❌";
+	width: 20px;
+	height: 20px;
+	display: block;
+	position: absolute;
+	top: 0;
+	right: -30px;
+}
+
+.acfgeometa_geocode_button.has_geojson::after {
+	content: '🌎';
+}
