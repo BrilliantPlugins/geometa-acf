@@ -86,7 +86,6 @@ if( !class_exists('acf_field_geometa') ) {
 			 */
 
 			// layout
-			$a = 1;
 			acf_render_field_setting( $field, array(
 				'label'            => __('Data Input Format','acf'),
 				'instructions'    => __('How should the user input location data?','geometa-acf'),
@@ -131,6 +130,7 @@ if( !class_exists('acf_field_geometa') ) {
 		 *  @return	n/a
 		 */
 		function render_field( $field ) {
+			$a = 1;
 			if ( $field[ 'user_input_type' ] == 'geojson' ) {
 				echo '<textarea placeholder="' . esc_attr__( 'Paste GeoJSON here', 'geometa-acf' ) . '" name="' . esc_attr($field['name']) . '" >' . esc_attr($field['value']) . '</textarea>';
 			} else if ( $field[ 'user_input_type' ] == 'latlng' ) {
@@ -260,8 +260,9 @@ if( !class_exists('acf_field_geometa') ) {
 		 */
 		function update_field( $field )
 		{
-			$field['user_input_type'] = $_POST[ $field['key'] ];
-			// Note: This function can be removed if not used
+			if ( !empty( $_POST[ $field[ 'key' ]  ] ) ) {
+				$field['user_input_type'] = $_POST[ $field['key'] ];
+			}
 			return $field;
 		}
 	}
