@@ -34,6 +34,14 @@ This ACF field type is compatible with:
 * ACF 5 / ACF Pro
 * ACF 4
 
+*Note*
+
+Metavalues for terms (Categories/Tags) were stored in wp_options up until ACF
+Pro 5.5.0. GeoMeta for ACF will still display a map or other input field for
+terms in previous versions of ACF, but since the values aren't stored in the
+wp_termmeta table, they won't be picked up for inclusion in the spatial table
+and spatial searches on them will fail. 
+
 == Installation ==
 
 Be sure that Advanced Custom Fields is installed. You can use Advanced Custom
