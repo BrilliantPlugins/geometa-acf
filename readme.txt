@@ -78,6 +78,9 @@ Coming soon!
 
 == Changelog ==
 
+= 0.0.3 = 
+* Moved from including the WP-GeoMeta plugin to including wp-geometa-lib
+
 = 0.0.2 =
 * Set up I18N support and Portuguese translation
 * Code cleanup
@@ -89,6 +92,6 @@ Coming soon!
 * Support for ACF v4 and ACF Pro/v5
 
 == Upgrade Notice ==
-= 0.0.2 = 
+= 0.0.3 = 
 * You don't have GeoMeta for ACF yet, so there's no need to read this upgrade
 notice!
