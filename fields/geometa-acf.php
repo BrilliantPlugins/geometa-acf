@@ -169,7 +169,7 @@ if( !class_exists('acf_field_geometa') ) {
 				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
 			} else if ( $field[ 'user_input_type' ] = 'byo-geocoder' ) {
-					echo '<div class="acgeometa_geocode_wrap">';
+					echo '<div class="acfeometa_geocode_wrap">';
 
 						$class = '';
 						if ( WP_GeoUtil::is_geojson( $field['value'] ) ) {
