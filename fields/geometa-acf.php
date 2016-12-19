@@ -43,7 +43,7 @@ if( !class_exists('acf_field_geometa') ) {
 			/*
 			 *  category (string) basic | content | choice | relational | jquery | layout | CUSTOM GROUP NAME
 			 */
-			$this->category = __('basic','acf');
+			$this->category = __('Content','acf');
 
 
 			$this->defaults = array(
@@ -93,10 +93,10 @@ if( !class_exists('acf_field_geometa') ) {
 				'name'            => 'user_input_type',
 				'layout'        => 'vertical',
 				'choices'        => array(
-					'latlng'            => __('Latitude and Longitude','geometa-acf'),
 					'map'            => __('A map with drawing tools','geometa-acf'),
+					'latlng'            => __('Latitude and Longitude','geometa-acf'),
 					'geojson'            => __('GeoJSON text input','geometa-acf'),
-					'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
+					// 'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
 				)
 			));
 		}
@@ -133,7 +133,8 @@ if( !class_exists('acf_field_geometa') ) {
 		function render_field( $field ) {
 			$a = 1;
 			if ( $field[ 'user_input_type' ] == 'geojson' ) {
-				echo '<textarea placeholder="' . esc_attr__( 'Paste GeoJSON here', 'geometa-acf' ) . '" name="' . esc_attr($field['name']) . '" >' . esc_attr($field['value']) . '</textarea>';
+				echo '<label>' . esc_attr__( 'Paste GeoJSON below', 'geometa-acf' ) . '</label><br>';
+				echo '<textarea name="' . esc_attr($field['name']) . '" >' . esc_attr($field['value']) . '</textarea>';
 			} else if ( $field[ 'user_input_type' ] == 'latlng' ) {
 				$lat = '';
 				$lng = '';
@@ -168,6 +169,7 @@ if( !class_exists('acf_field_geometa') ) {
 				echo '<div class="acfgeometa_map" data-map="' . htmlentities( json_encode( $map_options ) ) . '">The map is loading...</div>';
 				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
+				/*
 			} else if ( $field[ 'user_input_type' ] = 'byo-geocoder' ) {
 					echo '<div class="acfeometa_geocode_wrap">';
 
@@ -179,6 +181,7 @@ if( !class_exists('acf_field_geometa') ) {
 						echo '<button class="acfgeometa_geocode_button' . $class . '">Geocode</button>';
 						echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 					echo '</div>';
+				 */
 			} else {
 				echo sprintf( esc_html__( 'Sorry, %1$s input type isn\'t supported yet!', 'geometa-acf' ), $field[ 'user_input_type' ] )  . "\n";
 			}
@@ -247,10 +250,10 @@ if( !class_exists('acf_field_geometa') ) {
 				'value'		=>	$field['user_input_type'],
 				'layout'	=>	'vertical',
 				'choices'	=>	array(
-					'latlng'   => __('Latitude and Longitude','geometa-acf'),
 					'map'      => __('A map with drawing tools','geometa-acf'),
+					'latlng'   => __('Latitude and Longitude','geometa-acf'),
 					'geojson'  => __('GeoJSON text input','geometa-acf'),
-					'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
+					// 'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
 				)
 			));
 
@@ -271,7 +274,6 @@ if( !class_exists('acf_field_geometa') ) {
 		 *
 		 *  @return	$field - the modified field
 		 */
-		/*
 		function update_field( $field )
 		{
 			if ( !empty( $_POST[ $field[ 'key' ]  ] ) ) {
@@ -279,7 +281,6 @@ if( !class_exists('acf_field_geometa') ) {
 			}
 			return $field;
 		}
-*/
 	}
 
 	// initialize
