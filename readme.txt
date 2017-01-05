@@ -1,13 +1,13 @@
-=== Advanced Custom Fields: GeoMeta Field ===
+=== GeoMeta For ACF ===
 Contributors: stuporglue, cimburadotcom
-Tags: GIS, Spatial, ACF, WP-GeoMeta, GeoJSON
+Tags: Advanced Custom Fields, GIS, geo, Spatial, ACF, WP-GeoMeta, GeoJSON
 Requires at least: 4.4.0
-Tested up to: 4.6.1
+Tested up to: 4.7.0
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Store real spatial data with ACF, using the WP-GeoMeta library.
+Store real spatial data with Advanced Custom Fields, using the WP-GeoMeta library.
 
 == Description ==
 
@@ -82,7 +82,15 @@ me](https://twitter.com/stuporglue) on twitter.
 
 == Screenshots ==
 
-Coming soon!
+1. You can select the GeoMeta field type within the ACF field group like you
+would expect. You can choose one of three options for how users will enter
+spatial data.
+2. The most likely option is to display a map with drawing tools. Editors can
+add, edit and delete shapes on the map.
+3. If your users expect to be able to enter latitude and longitude, you can opt to capture those
+instead. The value is saved to the postmeta table as GeoJSON.
+4. You can also allow editors to paste in raw GeoJSON text if that better
+meets your needs. 
 
 == Changelog ==
 
