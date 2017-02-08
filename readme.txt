@@ -94,6 +94,9 @@ meets your needs.
 
 == Changelog ==
 
+= 0.0.4 = 
+* Updated wp-geometa-lib
+
 = 0.0.3 = 
 * Moved from including the WP-GeoMeta plugin to including wp-geometa-lib
 
