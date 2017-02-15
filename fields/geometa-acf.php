@@ -96,7 +96,7 @@ if( !class_exists('acf_field_geometa') ) {
 					'map'            => __('A map with drawing tools','geometa-acf'),
 					'latlng'            => __('Latitude and Longitude','geometa-acf'),
 					'geojson'            => __('GeoJSON text input','geometa-acf'),
-					// 'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
+					'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
 				)
 			));
 		}
@@ -169,7 +169,6 @@ if( !class_exists('acf_field_geometa') ) {
 				echo '<div class="acfgeometa_map" data-map="' . htmlentities( json_encode( $map_options ) ) . '">The map is loading...</div>';
 				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
-				/*
 			} else if ( $field[ 'user_input_type' ] = 'byo-geocoder' ) {
 					echo '<div class="acfeometa_geocode_wrap">';
 
@@ -181,7 +180,6 @@ if( !class_exists('acf_field_geometa') ) {
 						echo '<button class="acfgeometa_geocode_button' . $class . '">Geocode</button>';
 						echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 					echo '</div>';
-				 */
 			} else {
 				echo sprintf( esc_html__( 'Sorry, %1$s input type isn\'t supported yet!', 'geometa-acf' ), $field[ 'user_input_type' ] )  . "\n";
 			}
@@ -253,7 +251,7 @@ if( !class_exists('acf_field_geometa') ) {
 					'map'      => __('A map with drawing tools','geometa-acf'),
 					'latlng'   => __('Latitude and Longitude','geometa-acf'),
 					'geojson'  => __('GeoJSON text input','geometa-acf'),
-					// 'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
+					'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
 				)
 			));
 
