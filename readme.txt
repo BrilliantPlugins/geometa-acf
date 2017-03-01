@@ -1,5 +1,5 @@
 === GeoMeta For ACF ===
-Contributors: stuporglue, cimburadotcom
+Contributors: stuporglue, cimburacom 
 Tags: Advanced Custom Fields, GIS, geo, Spatial, ACF, WP-GeoMeta, GeoJSON
 Requires at least: 4.4.0
 Tested up to: 4.7.0
@@ -99,6 +99,7 @@ meets your needs.
 
 = 0.0.3 = 
 * Moved from including the WP-GeoMeta plugin to including wp-geometa-lib
+* Fixed Contributor name for cimburacom
 
 = 0.0.2 =
 * Set up I18N support and Portuguese translation
