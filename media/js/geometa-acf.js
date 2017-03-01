@@ -7,35 +7,6 @@
 	}
 
 	function make_maps(i,wrapperdiv) {
-		var div = jQuery(wrapperdiv).find('.acfgeometa_map');
-		if ( div.data( 'map_loaded' ) === true ) {
-			return;
-		}
-		div = div[0];
-		div.innerHTML = '';
-		var map = L.map(div).setView([0,0],1);
-
-		// Basemap
-		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			maxZoom: 19,
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-		}).addTo(map);
-
-		// Location control
-		L.control.locate({ 
-			icon: 'pointer_marker',
-			iconLoading: 'pointer_marker_loading'
-		}).addTo(map);
-
-		// Draw control layer
-		var curgeojson = '';
-		var drawnItems = new L.GeoJSON();
-		try {
-			curgeojson = JSON.parse(jQuery(this).find('input[data-name="geojson"]').val());
-			drawnItems.addData(curgeojson);
-		} catch(e) {}
-		map.addLayer( drawnItems );
-
 		// Draw control
 		var drawControl = new L.Control.Draw({
 			draw: {

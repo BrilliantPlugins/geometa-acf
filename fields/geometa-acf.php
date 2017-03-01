@@ -173,8 +173,15 @@ if( !class_exists('acf_field_geometa') ) {
 				$map_options = array();
 				echo '<div class="acfgeometa_map_wrap">';
 				$map = new LeafletPHP(array(),'','acfgeometa_map');
-				$map->add_control('L.Control.Locate');
-				$map->add_control('L.Control.Draw');
+				$map->add_control('L.Control.Locate', array(
+						'icon' => 'pointer_marker',
+						'iconLoading' => 'pointer_marker_loading'
+					),'locate');
+				$map->add_control('L.Control.Draw', array(
+					'draw' => array( 'circle' => false ), 
+					'edit' => array( 'featureGroup' => '@@@drawnItems@@@' )
+					),'draw');
+				$map->add_layer('L.GeoJSON',$field['value'],'drawnItems');
 				echo $map;
 				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
