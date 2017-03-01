@@ -56,7 +56,17 @@ if( !class_exists('acf_plugin_geometa') ) {
 			add_action('acf/register_fields', 		array($this, 'include_field_types')); // v4
 
 			// Include the WP-GeoMeta library
+			if ( !file_exists( dirname( __FILE__ ) . '/wp-geometa-lib/wp-geometa-lib-loader.php' ) ) {
+				error_log( __( "GeoMeta for ACF could not load wp-geometa-lib. You probably cloned wp-geometa from git and didn't check out submodules!", 'geometa-acf' ) );
+				return false;
+			}
 			require_once( dirname( __FILE__ ) . '/wp-geometa-lib/wp-geometa-lib-loader.php' );
+
+			if ( !file_exists( dirname( __FILE__ ) . '/leaflet-php/leaflet-php-loader.php' ) ) {
+				error_log( __( "GeoMeta for ACF could not load leaflet-php. You probably cloned wp-geometa from git and didn't check out submodules!", 'geometa-acf' ) );
+				return false;
+			}
+			require_once( dirname( __FILE__ ) . '/leaflet-php/leaflet-php-loader.php' );
 		}
 
 
@@ -89,6 +99,14 @@ if( !class_exists('acf_plugin_geometa') ) {
 function acf_geometa_activation_hook() {
 	if ( !class_exists( 'acf' ) ) {
 		wp_die( __( 'This plugin requires Advanced Custom Fields  or Advanced Custom Fields Pro. Please install and activate ACF first, then activate this plugin.', 'geometa-acf' ) );
+	}
+
+	if ( !file_exists( dirname( __FILE__ ) . '/wp-geometa-lib/wp-geometa-lib-loader.php' ) ) {
+		wp_die( __( "GeoMeta for ACF could not load wp-geometa-lib. You probably cloned wp-geometa from git and didn't check out submodules!", 'geometa-acf' ) );
+	}
+
+	if ( !file_exists( dirname( __FILE__ ) . '/leaflet-php/leaflet-php-loader.php' ) ) {
+		wp_die( __( "GeoMeta for ACF could not load leaflet-php. You probably cloned wp-geometa from git and didn't check out submodules!", 'geometa-acf' ) );
 	}
 
 	$wpgeo = WP_GeoMeta::get_instance();

@@ -1,7 +1,7 @@
 (function($){
 	function initialize_field( $el ) {
 
-		jQuery('.acfgeometa_map_wrap').each( make_maps );
+		// jQuery('.acfgeometa_map_wrap').each( make_maps );
 
 		jQuery('.acfgeometa_ll_wrap').on( 'keyup change', make_ll_to_geojson );
 	}
