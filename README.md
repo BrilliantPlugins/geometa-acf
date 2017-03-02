@@ -1,6 +1,8 @@
-# ACF GeoMeta Field
+# GeoMeta for ACF Field
 
 Store real spatial data with ACF, using the WP-GeoMeta library.
+
+![Store spatial data using ACF with the Geometa for ACF plugin.](assets/banner-1544x500.png)
 
 ---------------------------------------------------------------------------
 
@@ -49,6 +51,29 @@ To unlock this plugin's full potential you can query and filter your data using 
 
 For sample queries and more information, please see the [WP-GeoMeta
 documentation](https://github.com/cimburadotcom/wp-geometa);
+
+### Screenshots
+
+You can configure Geometa for ACF like you do any other Advanced Custom Field.
+![Configure Geometa-ACF like any other ACF field](assets/screenshot-1.png)
+
+The default input method is a map with the Leaflet.Draw tools. You're not limited to points
+with Geometa for ACF. You can store points, lines, polygons or a mix of the three.
+
+There is also a geolocation button to position the map at your current location.
+![The default input method is a map with the Leaflet.Draw tools.](assets/screenshot-2.png)
+
+Coordinates are also supported. If you, or your users, will have known coordinates you can offer
+a simple pair of latitude/longitude inputs.
+![Coordinate input is also supported.](assets/screenshot-3.png)
+
+You can also enable raw-GeoJSON input for power users or for debugging. 
+![Raw GeoJSON input is available for power users.](assets/screenshot-4.png)
+
+
+
+
+
 
 ### Bring Your Own Geocoder
 
@@ -140,5 +165,4 @@ jQuery(document).on('geometa-acf/byo-geocode',function(e, origEvent, callback){
 		}
 	);
 });
-
 ```

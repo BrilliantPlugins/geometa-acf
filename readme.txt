@@ -1,8 +1,8 @@
 === GeoMeta For ACF ===
-Contributors: stuporglue, cimburacom 
+Contributors: stuporglue, luminfire
 Tags: Advanced Custom Fields, GIS, geo, Spatial, ACF, WP-GeoMeta, GeoJSON
 Requires at least: 4.4.0
-Tested up to: 4.7.0
+Tested up to: 4.7.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -96,6 +96,11 @@ meets your needs.
 
 = 0.0.4 = 
 * Updated wp-geometa-lib
+* Geometa-ACF is now using Leaflet-PHP to generate Leaflet code. Will allow
+for easier Leaflet maintenance going forward.
+* Alpha feature *Bring Your Own Geocoder*. Define GEOMETA_ACF_BYOGC=true to
+enable and see media/js/geometa-acf.js for callbacks. More documentation
+coming when it comes out of alpha. 
 
 = 0.0.3 = 
 * Moved from including the WP-GeoMeta plugin to including wp-geometa-lib

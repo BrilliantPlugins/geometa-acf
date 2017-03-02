@@ -172,18 +172,51 @@ if( !class_exists('acf_field_geometa') ) {
 			} else if ( $field[ 'user_input_type' ] == 'map' ) {
 				$map_options = array();
 				echo '<div class="acfgeometa_map_wrap">';
+
 				$map = new LeafletPHP(array(),'','acfgeometa_map');
+
 				$map->add_control('L.Control.Locate', array(
 						'icon' => 'pointer_marker',
 						'iconLoading' => 'pointer_marker_loading'
 					),'locate');
+
 				$map->add_control('L.Control.Draw', array(
 					'draw' => array( 'circle' => false ), 
 					'edit' => array( 'featureGroup' => '@@@drawnItems@@@' )
 					),'draw');
-				$map->add_layer('L.GeoJSON',$field['value'],'drawnItems');
+
+				$value = null;
+				if ( !empty( $field['value'] ) ) {
+					$value = json_decode( $field['value'] );
+				}
+
+				$map->add_layer('L.geoJSON',array($value),'drawnItems');
+
+				$map->add_script(
+					'// Create a function that will have access to drawnItems.
+					var savevalfunc = (function(thegeojson){
+						return function(){
+							thegeojson.val( JSON.stringify( drawnItems.toGeoJSON() ) );
+						};
+					})(jQuery(\'input[data-name="geojson_' . $map->get_id() . '"]\'));
+
+					map.on(L.Draw.Event.CREATED, function (e) {
+						drawnItems.addLayer(e.layer);
+						savevalfunc(e);
+					});
+
+					map.on( L.Draw.Event.EDITED, savevalfunc );
+					map.on( L.Draw.Event.EDITSTOP, savevalfunc );
+					map.on( L.Draw.Event.DELETESTOP, savevalfunc );
+
+					// If we have existing geojson, fit bounds
+					if ( drawnItems.getLayers().length > 0 ) {
+						map.fitBounds(drawnItems.getBounds());
+					}'
+				);
+
 				echo $map;
-				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
+				echo '<input type="hidden" data-name="geojson_' . $map->get_id() . '" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
 			} else if ( $field[ 'user_input_type' ] = 'byo-geocoder' ) {
 					echo '<div class="acfeometa_geocode_wrap">';
