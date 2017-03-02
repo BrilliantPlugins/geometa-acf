@@ -70,7 +70,13 @@ You can also enable raw-GeoJSON input for power users or for debugging.
 
 
 
-### Bring Your Own Geocoder
+### Bring Your Own Geocoder (Alpha feature)
+
+To enable BYOG, please define GEOMETA_ACF_BYOGC to true.
+
+```
+define('GEOMETA_ACF_BYOGC',true);
+```
 
 GeoMeta for ACF includes an advanced field, *Bring Your Own Geocoder* (BYOG). 
 
