@@ -1,5 +1,4 @@
 # GeoMeta for ACF Field
----------------------------------------------------------------------------
 ![Store spatial data using ACF with the Geometa for ACF plugin.](assets/banner-1544x500.png)
 
 GeoMeta for ACF is an easy way to store location information about posts, pages,
