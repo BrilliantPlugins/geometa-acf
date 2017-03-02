@@ -1,10 +1,6 @@
 # GeoMeta for ACF Field
-
-Store real spatial data with ACF, using the WP-GeoMeta library.
-
-![Store spatial data using ACF with the Geometa for ACF plugin.](assets/banner-1544x500.png)
-
 ---------------------------------------------------------------------------
+![Store spatial data using ACF with the Geometa for ACF plugin.](assets/banner-1544x500.png)
 
 GeoMeta for ACF is an easy way to store location information about posts, pages,
 users or other content types that ACF supports. The default input is a map
