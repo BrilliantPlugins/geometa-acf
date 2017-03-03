@@ -86,7 +86,8 @@ if( !class_exists('acf_field_geometa') ) {
 			 */
 
 			// layout
-			acf_render_field_setting( $field, array(
+
+			$field_settings = array(
 				'label'            => __('Data Input Format','acf'),
 				'instructions'    => __('How should the user input location data?','geometa-acf'),
 				'type'            => 'radio',
@@ -96,9 +97,14 @@ if( !class_exists('acf_field_geometa') ) {
 					'map'            => __('A map with drawing tools','geometa-acf'),
 					'latlng'            => __('Latitude and Longitude','geometa-acf'),
 					'geojson'            => __('GeoJSON text input','geometa-acf'),
-					// 'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
 				)
-			));
+			);
+
+			if ( defined('GEOMETA_ACF_BYOGC') && GEOMETA_ACF_BYOGC ) {
+				$field_settings['choices']['byo-geocoder'] = __('Bring Your Own Geocoder','geometa-acf');
+			}
+
+			acf_render_field_setting( $field, $field_settings );
 		}
 
 		/*
@@ -166,10 +172,52 @@ if( !class_exists('acf_field_geometa') ) {
 			} else if ( $field[ 'user_input_type' ] == 'map' ) {
 				$map_options = array();
 				echo '<div class="acfgeometa_map_wrap">';
-				echo '<div class="acfgeometa_map" data-map="' . htmlentities( json_encode( $map_options ) ) . '">The map is loading...</div>';
-				echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
+
+				$map = new LeafletPHP(array(),'','acfgeometa_map');
+
+				$map->add_control('L.Control.Locate', array(
+						'icon' => 'pointer_marker',
+						'iconLoading' => 'pointer_marker_loading'
+					),'locate');
+
+				$map->add_control('L.Control.Draw', array(
+					'draw' => array( 'circle' => false ), 
+					'edit' => array( 'featureGroup' => '@@@drawnItems@@@' )
+					),'draw');
+
+				$value = null;
+				if ( !empty( $field['value'] ) ) {
+					$value = json_decode( $field['value'] );
+				}
+
+				$map->add_layer('L.geoJSON',array($value),'drawnItems');
+
+				$map->add_script(
+					'// Create a function that will have access to drawnItems.
+					var savevalfunc = (function(thegeojson){
+						return function(){
+							thegeojson.val( JSON.stringify( drawnItems.toGeoJSON() ) );
+						};
+					})(jQuery(\'input[data-name="geojson_' . $map->get_id() . '"]\'));
+
+					map.on(L.Draw.Event.CREATED, function (e) {
+						drawnItems.addLayer(e.layer);
+						savevalfunc(e);
+					});
+
+					map.on( L.Draw.Event.EDITED, savevalfunc );
+					map.on( L.Draw.Event.EDITSTOP, savevalfunc );
+					map.on( L.Draw.Event.DELETESTOP, savevalfunc );
+
+					// If we have existing geojson, fit bounds
+					if ( drawnItems.getLayers().length > 0 ) {
+						map.fitBounds(drawnItems.getBounds());
+					}'
+				);
+
+				echo $map;
+				echo '<input type="hidden" data-name="geojson_' . $map->get_id() . '" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 				echo '</div>';
-				/*
 			} else if ( $field[ 'user_input_type' ] = 'byo-geocoder' ) {
 					echo '<div class="acfeometa_geocode_wrap">';
 
@@ -181,7 +229,6 @@ if( !class_exists('acf_field_geometa') ) {
 						echo '<button class="acfgeometa_geocode_button' . $class . '">Geocode</button>';
 						echo '<input type="hidden" data-name="geojson" name="' . esc_attr($field['name']) . '" value="' . esc_attr($field['value']) . '">';
 					echo '</div>';
-				 */
 			} else {
 				echo sprintf( esc_html__( 'Sorry, %1$s input type isn\'t supported yet!', 'geometa-acf' ), $field[ 'user_input_type' ] )  . "\n";
 			}
@@ -206,19 +253,17 @@ if( !class_exists('acf_field_geometa') ) {
 
 
 			// register & include JS
-			wp_register_script( 'acf-input-geometa-leaflet1-js', "{$url}assets/js/leaflet.js", array(), $version );
-			wp_register_script( 'acf-input-geometa-leaflet-draw-js', "{$url}assets/Leaflet.draw/leaflet.draw.js", array('acf-input-geometa-leaflet1-js'), $version );
-			wp_register_script( 'acf-input-geometa-leaflet-locate-control-js', "{$url}assets/js/L.Control.Locate.min.js", array('acf-input-geometa-leaflet1-js'), $version );
-			wp_register_script( 'acf-input-geometa', "{$url}assets/js/geometa-acf.js", array('acf-input','acf-input-geometa-leaflet1-js', 'acf-input-geometa-leaflet-locate-control-js','acf-input-geometa-leaflet-draw-js'), $version );
-
+			// wp_register_script( 'acf-input-geometa-leaflet1-js', "{$url}assets/js/leaflet.js", array(), $version );
+			// wp_register_script( 'acf-input-geometa-leaflet-draw-js', "{$url}assets/Leaflet.draw/leaflet.draw.js", array('acf-input-geometa-leaflet1-js'), $version );
+			// wp_register_script( 'acf-input-geometa-leaflet-locate-control-js', "{$url}assets/js/L.Control.Locate.min.js", array('acf-input-geometa-leaflet1-js'), $version );
+			wp_register_script( 'acf-input-geometa', "{$url}media/js/geometa-acf.js", array('acf-input'), $version );
 			wp_enqueue_script('acf-input-geometa');
 
 			// register & include CSS
-			wp_register_style( 'acf-input-geometa-leaflet1-css', "{$url}assets/css/leaflet.css", array(), $version );
-			wp_register_style( 'acf-input-geometa-leaflet-locate-control-css', "{$url}assets/css/L.Control.Locate.min.css", array('acf-input-geometa-leaflet1-css'), $version );
-			wp_register_style( 'acf-input-geometa-leaflet-draw-css', "{$url}assets/Leaflet.draw/leaflet.draw.css", array('acf-input-geometa-leaflet1-css'), $version );
-			wp_register_style( 'acf-input-geometa', "{$url}assets/css/geometa-acf.css", array('acf-input','acf-input-geometa-leaflet-draw-css'), $version );
-
+			//wp_register_style( 'acf-input-geometa-leaflet1-css', "{$url}assets/css/leaflet.css", array(), $version );
+			//wp_register_style( 'acf-input-geometa-leaflet-locate-control-css', "{$url}assets/css/L.Control.Locate.min.css", array('acf-input-geometa-leaflet1-css'), $version );
+			//wp_register_style( 'acf-input-geometa-leaflet-draw-css', "{$url}assets/Leaflet.draw/leaflet.draw.css", array('acf-input-geometa-leaflet1-css'), $version );
+			wp_register_style( 'acf-input-geometa', "{$url}media/css/geometa-acf.css", array('acf-input'), $version );
 			wp_enqueue_style('acf-input-geometa');
 		}
 
@@ -253,7 +298,7 @@ if( !class_exists('acf_field_geometa') ) {
 					'map'      => __('A map with drawing tools','geometa-acf'),
 					'latlng'   => __('Latitude and Longitude','geometa-acf'),
 					'geojson'  => __('GeoJSON text input','geometa-acf'),
-					// 'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
+					'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
 				)
 			));
 
