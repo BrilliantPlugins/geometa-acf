@@ -137,7 +137,6 @@ if( !class_exists('acf_field_geometa') ) {
 		 *  @return	n/a
 		 */
 		function render_field( $field ) {
-			$a = 1;
 			if ( $field[ 'user_input_type' ] == 'geojson' ) {
 				echo '<label>' . esc_attr__( 'Paste GeoJSON below', 'geometa-acf' ) . '</label><br>';
 				echo '<textarea name="' . esc_attr($field['name']) . '" >' . esc_attr($field['value']) . '</textarea>';
@@ -246,23 +245,15 @@ if( !class_exists('acf_field_geometa') ) {
 		 *  @date	23/01/13
 		 */
 		function input_admin_enqueue_scripts() {
-
 			// vars
 			$url = $this->settings['url'];
 			$version = $this->settings['version'];
 
-
 			// register & include JS
-			// wp_register_script( 'acf-input-geometa-leaflet1-js', "{$url}assets/js/leaflet.js", array(), $version );
-			// wp_register_script( 'acf-input-geometa-leaflet-draw-js', "{$url}assets/Leaflet.draw/leaflet.draw.js", array('acf-input-geometa-leaflet1-js'), $version );
-			// wp_register_script( 'acf-input-geometa-leaflet-locate-control-js', "{$url}assets/js/L.Control.Locate.min.js", array('acf-input-geometa-leaflet1-js'), $version );
 			wp_register_script( 'acf-input-geometa', "{$url}media/js/geometa-acf.js", array('acf-input'), $version );
 			wp_enqueue_script('acf-input-geometa');
 
 			// register & include CSS
-			//wp_register_style( 'acf-input-geometa-leaflet1-css', "{$url}assets/css/leaflet.css", array(), $version );
-			//wp_register_style( 'acf-input-geometa-leaflet-locate-control-css', "{$url}assets/css/L.Control.Locate.min.css", array('acf-input-geometa-leaflet1-css'), $version );
-			//wp_register_style( 'acf-input-geometa-leaflet-draw-css', "{$url}assets/Leaflet.draw/leaflet.draw.css", array('acf-input-geometa-leaflet1-css'), $version );
 			wp_register_style( 'acf-input-geometa', "{$url}media/css/geometa-acf.css", array('acf-input'), $version );
 			wp_enqueue_style('acf-input-geometa');
 		}
@@ -289,7 +280,7 @@ if( !class_exists('acf_field_geometa') ) {
 			print '<p class="description">' . __("How should the user input location data?",'geometa-acf') . '</p>';
 			print '</td><td>';
 
-			do_action('acf/create_field', array(
+			$settings = array(
 				'type'		=>	'radio',
 				'name'		=>	$field['name'],
 				'value'		=>	$field['user_input_type'],
@@ -298,9 +289,14 @@ if( !class_exists('acf_field_geometa') ) {
 					'map'      => __('A map with drawing tools','geometa-acf'),
 					'latlng'   => __('Latitude and Longitude','geometa-acf'),
 					'geojson'  => __('GeoJSON text input','geometa-acf'),
-					'byo-geocoder'  => __('Bring Your Own Geocoder','geometa-acf'),
 				)
-			));
+			);
+
+			if ( defined('GEOMETA_ACF_BYOGC') && GEOMETA_ACF_BYOGC ) {
+				$field_settings['choices']['byo-geocoder'] = __('Bring Your Own Geocoder','geometa-acf');
+			}
+
+			do_action('acf/create_field', $settings );
 
 			print '</td></tr>';
 		}
@@ -319,8 +315,7 @@ if( !class_exists('acf_field_geometa') ) {
 		 *
 		 *  @return	$field - the modified field
 		 */
-		function update_field( $field )
-		{
+		function update_field( $field ) {
 			if ( !empty( $_POST[ $field[ 'key' ]  ] ) ) {
 				$field['user_input_type'] = $_POST[ $field['key'] ];
 			}
