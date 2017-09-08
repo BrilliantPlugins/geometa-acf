@@ -1,6 +1,6 @@
 [submodule "wp-geometa-lib"]
 	path = wp-geometa-lib
-	url = git@github.com:cimburadotcom/wp-geometa-lib.git
+	url = git@github.com:BrilliantPlugins/wp-geometa-lib.git
 [submodule "leaflet-php"]
 	path = leaflet-php
-	url = git@github.com:cimburadotcom/leaflet-php.git
+	url = git@github.com:LuminFire/leaflet-php.git
