@@ -73,6 +73,7 @@ For fast and short questions you can [contact me](https://twitter.com/stuporglue
 * Updated wp-geometa-lib
 * Updated readme.txt
 * Tested with WP 4.8
+* Fixed [issue](https://github.com/BrilliantPlugins/geometa-acf/issues/1) where maps wouldn't show up on category pages.
 
 = 0.0.4 = 
 * Updated wp-geometa-lib
