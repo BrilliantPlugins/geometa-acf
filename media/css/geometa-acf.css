@@ -26,6 +26,14 @@
 	margin-top: 3px;
 }
 
+.search_icon_loading {
+	background: rgba(0, 0, 0, 0) url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0AgMAAAC4FvN4AAAACVBMVEUmJib///+7u7uD0BOpAAAAAnRSTlMAAHaTzTgAAABySURBVCjPzdIxCgNRCEXRh+VfiqsZBtLMav5SLOWuMlVGDaRJNa87oKKgXj16mA6Rkj5asEsOUQLy1kk4TbLSlRL7h0LyfzSnICud7NV3AcbWjIuq7zAgbmltsiR9iS5nNy2iyYZEDtHlQ2tUWjzwXypv7w/WCV2gMBoAAAAASUVORK5CYII=') no-repeat scroll center bottom;
+	display: inline-block;
+	height: 20px;
+	width: 20px;
+	margin-top: 3px;
+}
+
 .geocoder-control.leaflet-control {
 	height: 34px !important;
 	margin-left: 9px !important;

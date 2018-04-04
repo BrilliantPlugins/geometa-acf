@@ -181,6 +181,7 @@ if( !class_exists('acf_field_geometa') ) {
 
 				$map->add_control('L.esri.Geocoding.geosearch', array(
 						'icon' => 'search_icon',
+						'iconLoading' => 'search_icon_loading'
 					),'searchControl');
 
 				$map->add_control('L.Control.Draw', array(
