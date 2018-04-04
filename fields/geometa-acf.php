@@ -200,7 +200,6 @@ if( !class_exists('acf_field_geometa') ) {
 					'
 					// Add search results to map
 					searchControl.on("results", function(data) {
-						drawnItems.clearLayers();
 						for (var i = data.results.length - 1; i >= 0; i--) {
 							drawnItems.addLayer(L.marker(data.results[i].latlng));
 							savevalfunc(data);
