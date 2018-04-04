@@ -179,6 +179,11 @@ if( !class_exists('acf_field_geometa') ) {
 						'iconLoading' => 'pointer_marker_loading'
 					),'locate');
 
+				$map->add_control('L.esri.Geocoding.geosearch', array(
+						'icon' => 'search_icon',
+						'iconLoading' => 'search_icon_loading'
+					),'searchControl');
+
 				$map->add_control('L.Control.Draw', array(
 					'draw' => array( 'circle' => false ), 
 					'edit' => array( 'featureGroup' => '@@@drawnItems@@@' )
@@ -192,7 +197,17 @@ if( !class_exists('acf_field_geometa') ) {
 				$map->add_layer('L.geoJSON',array($value),'drawnItems');
 
 				$map->add_script(
-					'// Create a function that will have access to drawnItems.
+					'
+					// Add search results to map
+					searchControl.on("results", function(data) {
+						drawnItems.clearLayers();
+						for (var i = data.results.length - 1; i >= 0; i--) {
+							drawnItems.addLayer(L.marker(data.results[i].latlng));
+							savevalfunc(data);
+						}
+					});
+
+					// Create a function that will have access to drawnItems.
 					var savevalfunc = (function(thegeojson){
 						return function(){
 							thegeojson.val( JSON.stringify( drawnItems.toGeoJSON() ) );
@@ -256,6 +271,11 @@ if( !class_exists('acf_field_geometa') ) {
 			// register & include CSS
 			wp_register_style( 'acf-input-geometa', "{$url}media/css/geometa-acf.css", array('acf-input'), $version );
 			wp_enqueue_style('acf-input-geometa');
+
+			// enqueue Esri geocoder
+			wp_enqueue_script( 'esri-leaflet', "{$url}esri-leaflet-geocoder/esri-leaflet.js", array('acf-input-geometa', 'leafletphp-leaflet-js'), '2.1.4' );
+			wp_enqueue_script( 'esri-leaflet-geocoder', "{$url}esri-leaflet-geocoder/esri-leaflet-geocoder.js", array('acf-input-geometa', 'esri-leaflet'), '2.2.8' );
+			wp_enqueue_style( 'esri-leaflet-geocoder', "{$url}esri-leaflet-geocoder/esri-leaflet-geocoder.css", array('acf-input-geometa'), '2.2.8' );
 		}
 
 		/*
