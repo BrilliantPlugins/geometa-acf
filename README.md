@@ -9,12 +9,12 @@ text.
 
 GeoMeta for ACF supports for both ACF version 4  and 5.
 
-Why use GeoMeta for ACF instead of one of the other map inputs for ACF? 
+Why use GeoMeta for ACF instead of one of the other map inputs for ACF?
 
 GeoMeta for ACF uses WP-GeoMeta under the hood, which means that you're
 actually storing spatial meta data, not just text. With the WP-GeoMeta library
 you have access to all of the spatial functions MySQL supports to search and
-filter your WordPress posts and users. 
+filter your WordPress posts and users.
 
 ### Compatibility
 
@@ -42,7 +42,7 @@ Create a new field in ACF and select the GeoMeta field type.
 
 At its most basic, you can use this like you would any other ACF field. Add it to a post type, edit a post and add values to the GeoMeta for ACF field, etc.
 
-To unlock this plugin's full potential you can query and filter your data using MySQL's spatial functions. This plugin uses WP-GeoMeta, which means that you can make these spatial right within WP_Query, wp_get_posts, and anything els that use [WP_Meta_Query internally](https://codex.wordpress.org/Class_Reference/WP_Meta_Query). 
+To unlock this plugin's full potential you can query and filter your data using MySQL's spatial functions. This plugin uses WP-GeoMeta, which means that you can make these spatial right within WP_Query, wp_get_posts, and anything els that use [WP_Meta_Query internally](https://codex.wordpress.org/Class_Reference/WP_Meta_Query).
 
 For sample queries and more information, please see the [WP-GeoMeta
 documentation](https://github.com/cimburadotcom/wp-geometa);
@@ -62,7 +62,7 @@ Coordinates are also supported. If you, or your users, will have known coordinat
 a simple pair of latitude/longitude inputs.
 ![Coordinate input is also supported.](assets/screenshot-3.png)
 
-You can also enable raw-GeoJSON input for power users or for debugging. 
+You can also enable raw-GeoJSON input for power users or for debugging.
 ![Raw GeoJSON input is available for power users.](assets/screenshot-4.png)
 
 
@@ -78,28 +78,28 @@ To enable BYOG, please define GEOMETA_ACF_BYOGC to true.
 define('GEOMETA_ACF_BYOGC',true);
 ```
 
-GeoMeta for ACF includes an advanced field, *Bring Your Own Geocoder* (BYOG). 
+GeoMeta for ACF includes an advanced field, *Bring Your Own Geocoder* (BYOG).
 
-This is provided because good geocoders require an API key which *you* will need to obtain, and the fields you 
+This is provided because good geocoders require an API key which *you* will need to obtain, and the fields you
 collect may be different that the fields someone else collects.
 
-BYOG doesn't give the user a way to enter spatial data. Instead it provides a button that trigger a JavaScript 
-action when clicked action that you can do your own GeoCoding. It also provides a callback to store the in a 
-hidden GeoJSON field. 
+BYOG doesn't give the user a way to enter spatial data. Instead it provides a button that trigger a JavaScript
+action when clicked action that you can do your own GeoCoding. It also provides a callback to store the in a
+hidden GeoJSON field.
 
 #### Use Case
 
-You might have a set of text fields *Street*, *City*, *State*, *ZIP*. 
+You might have a set of text fields *Street*, *City*, *State*, *ZIP*.
 
-When the editor clicks the Geocode button, the JavaScript event `geometa-acf/byo-geocode` will fire. 
+When the editor clicks the Geocode button, the JavaScript event `geometa-acf/byo-geocode` will fire.
 
-The handler will receive 3 arguments: 
+The handler will receive 3 arguments:
  1. The triggered event
  2. The original click event
  3. The callback handler
 
 You will find the fields you want to get data from, and construct a Geocoding request. With the results
-you construct a GeoJSON Feature and then submit it to the callback. 
+you construct a GeoJSON Feature and then submit it to the callback.
 
 
 In pseudo code it would look like this:
@@ -119,7 +119,7 @@ jQuery(document).on('geometa-acf/byo-geocode',function(e, origEvent, callback){
 
 A more real life example might look something like this, using Geocod.io as the Geocoder:
 
-```
+```js
 jQuery(document).on('geometa-acf/byo-geocode',function(e, origEvent, callback){
 
 	// Make an AJAX call to Geocod.io and get a promise back.
