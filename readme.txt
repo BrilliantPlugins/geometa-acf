@@ -3,7 +3,7 @@ Contributors: stuporglue, luminfire
 Tags: Advanced Custom Fields, GIS, geo, Spatial, ACF, WP-GeoMeta, GeoJSON
 Requires at least: 4.4.0
 Tested up to: 4.8
-Stable tag: 0.0.6
+Stable tag: 0.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,9 @@ For fast and short questions you can [contact me](https://twitter.com/stuporglue
 4. You can also allow editors to paste in raw GeoJSON text if that better meets your needs. 
 
 == Changelog ==
+
+= 0.0.7 =
+* Updated wp-geometa-lib for MySQL 8
 
 = 0.0.6 =
 * Updated wp-geometa-lib
